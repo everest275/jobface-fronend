@@ -1,10 +1,10 @@
 import { createContext, useState, ReactNode, FC, useEffect } from 'react';
 import { loginRequest, registerRequest, verifyEmailRequest, verifyTokenRequest } from './AuthService';
-import { RegisterUser, LoginUser } from './AuthService';
+import { RegisterUser, LoginUser,User } from './AuthService';
 import Cookies from 'js-cookie'
 
 interface AuthContextType {
-  user: LoginUser | null;
+  user: User | null;
   verifyUser: RegisterUser | null;
   signup: (pass: string) => Promise<void>;
   signin: (user: LoginUser) => Promise<void>;
@@ -29,7 +29,7 @@ interface ApiError {
 }
 
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<LoginUser | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [verifyUser, setVerifyUser] = useState<RegisterUser | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);

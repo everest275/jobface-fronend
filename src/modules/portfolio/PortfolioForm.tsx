@@ -5,7 +5,7 @@ import { usePortfolios } from '../../context/usePortfolios';
 import deleteIcon from '../../assets/delete-icon.svg'
 import uploadIcon from '../../assets/upload.svg'
 import closeIcon from '../../assets/close.svg'
-import PictureHandler from '../pictures/PictureHandler'
+import PictureHandler from '../picture/portfolios&proyects/PictureHandler'
 
 type FormValues = {
   name: string;
@@ -103,7 +103,8 @@ export default function PortfolioForm() {
 
   const onSubmit = handleSubmit(async (data) => {
     const pullRequest = {
-      portfolio: "681b2958-5255-4374-ad34-644f2c42c397",
+      portfolio_type: "0bc6bd16-86d4-429e-afe3-b213b56e2121",
+      portfolio_style: "3cccd400-708c-4f36-bb48-898c887583b6",
       name:data.name,
       title: data.title,
       description: data.description,
@@ -119,7 +120,7 @@ export default function PortfolioForm() {
       await createPortfolio(pullRequest);
     }
 
-    navigate('/portfolios');
+    navigate('/');
   });
 
   return (

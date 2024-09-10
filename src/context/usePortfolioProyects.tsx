@@ -1,4 +1,4 @@
-import {PortfolioProyectContext} from '../modules/portfolio-proyect/PortfolioProyectContext'
+import {PortfolioProyectContext} from '../modules/proyect/portfolios/PortfolioProyectContext'
 import {useContext} from 'react'
 
 export const usePortfolioProyects = () => {

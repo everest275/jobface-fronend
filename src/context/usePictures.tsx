@@ -1,4 +1,4 @@
-import {PortfolioPictureContext} from '../modules/pictures/PictureContext'
+import {PortfolioPictureContext} from '../modules/picture/portfolios&proyects/PictureContext'
 import {useContext} from 'react'
 
 export const usePortfolioPictures = () => {

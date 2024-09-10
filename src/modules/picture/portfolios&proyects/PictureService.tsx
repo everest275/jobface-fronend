@@ -1,4 +1,4 @@
-import axios from '../../libs/axios'
+import axios from '../../../libs/axios'
 
 export interface PortfolioPicture {
     id: string;
@@ -62,45 +62,50 @@ export const portfolioPicturesRequest = async () => { // Ajustar tipo de retorno
 }
 
 
-
-
-
-
-
-
 //PROYECTS REQUESTS
 export const uploadProyectPictureRequest = async (picture: object) => {
-    const result = await axios.post(`/portfolio-pictures`, picture);
+    const result = await axios.post(`/proyect-pictures`, picture);
     return result
 }
 
-export const getProyectPictureByIdRequest = async (id: string) => { // Ajustar tipo de retorno según sea necesario
-    const result = await axios.get(`/portfolio-pictures/${id}`);
-    return result.data;
-}
 
 export const changeProyectPictureRequest = async (id: string, picture: object) => {
-    const result = await axios.put(`/portfolio-pictures/${id}`, picture);
+    const result = await axios.put(`/proyect-pictures/${id}`, picture);
     return result
 }
 
 export const deleteProyectPictureRequest = async (id: string) => {
-    const result = await axios.delete(`/portfolio-pictures/${id}`);
+    const result = await axios.delete(`/proyect-pictures/${id}`);
     return result.data;
 }
 
-export const getByIdProyectPictureRequest = async (id: string) => { // Ajustar tipo de retorno según sea necesario
-    const result = await axios.get(`/portfolio-pictures/${id}`);
+//Obtener un proyecto imagen
+export const getByIdProyectPictureRequest = async (id: string) => {
+    const result = await axios.get(`/proyect-picture/${id}`);
     return result.data;
 }
 
-export const getByProyectIdRequest = async (id: string) => { // Ajustar tipo de retorno según sea necesario
-    const result = await axios.get(`/portfolio-picture/${id}`);
+export const getByIdProyectPictureRequestPublic = async (id: string) => {
+    const result = await axios.get(`/proyect-picture/${id}`);
+    return result.data;
+}
+
+export const getByProyectIdRequest = async (id: string) => {
+    const result = await axios.get(`/proyect-picture/${id}`);
+    return result.data;
+}
+
+export const getAllByProyectIdRequestPublic = async (id: string) => {
+    const result = await axios.get(`/proyect-pictures-public/${id}`);
+    return result.data;
+}
+export const getAllByProyectIdRequest = async (id: string) => {
+    const result = await axios.get(`/proyect-pictures/${id}`);
     return result.data;
 }
 
 
-export const proyectPicturesRequest = async () => { // Ajustar tipo de retorno según sea necesario
-    const result = await axios.get(`/portfolio-pictures`);
+export const proyectPicturesRequest = async () => {
+    const result = await axios.get(`/proyect-pictures`);
     return result.data;
 }

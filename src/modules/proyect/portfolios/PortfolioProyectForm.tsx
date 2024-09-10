@@ -1,10 +1,10 @@
 import { useForm, Resolver } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { usePortfolioProyects } from '../../context/usePortfolioProyects';
-import PictureHandler from '../pictures/PictureHandler'
+import { usePortfolioProyects } from '../../../context/usePortfolioProyects';
+import PictureHandler from '../../picture/portfolios&proyects/PictureHandler'
 
-import saveIcon from '../../assets/upload.svg'
+import saveIcon from '../../../assets/upload.svg'
 
 type FormValues = {
   portfolio: string;
@@ -53,9 +53,9 @@ const resolver: Resolver<FormValues> = async (values) => {
 
 export default function PortfolioProyectForm() {
 
-  const { id,portfolio } = useParams<{ id: string,portfolio:string }>();
+  const { id, portfolio } = useParams<{ id: string, portfolio: string }>();
 
-  const { register, handleSubmit, setValue,getValues, formState: { errors } } = useForm<FormValues>({ resolver });
+  const { register, handleSubmit, setValue, getValues, formState: { errors } } = useForm<FormValues>({ resolver });
   const navigate = useNavigate();
 
   const { createPortfolioProyect, updatePortfolioProyect, getPortfolioProyectById } = usePortfolioProyects();
@@ -88,8 +88,8 @@ export default function PortfolioProyectForm() {
 
     if (id) {
       await updatePortfolioProyect(id, pullRequest);
-    } else if(portfolio){
-      pullRequest.portfolio=portfolio
+    } else if (portfolio) {
+      pullRequest.portfolio = portfolio
       await createPortfolioProyect(pullRequest);
     }
 
@@ -98,54 +98,50 @@ export default function PortfolioProyectForm() {
 
   return (
     <div className="lg:pl-20 lg:pr-20 min-h-screen flex flex-col items-center pr-5 pl-5 w-full">
-      <PictureHandler type={1} isViewer={true} isPublic={false} id={""} />
-      <form onSubmit={onSubmit}>
 
-        <div className="flex flex-col items-center bg-transparent rounded-md gap-2 justify-center">
 
-          <section className="block w-full">
-            <div className="flex flex-col gap-6 relative">
-              <div className="flex flex-col">
-                
-                <input
-                  type="text"
-                  {...register("title", { required: true })}
-                  className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
+      {id ? (<PictureHandler type={2} isViewer={true} isPublic={false} id={id ? id : ""} />) : ("")}
 
-                />
-              </div>
-              {errors.title && <span>Title is required</span>}
+      <form className="flex flex-col gap-1" onSubmit={onSubmit}>
 
-              <div className="flex flex-col w-full">
-                <input
-                  type="text"
-                  {...register("position", { required: true })}
-                  className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
+        <div className="flex flex-col">
 
-                />
-              </div>
-              {errors.position && <span>Position is required</span>}
+          <input
+            type="text" placeholder="Title"
+            {...register("title", { required: true })}
+            className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md"
 
-              <div className="flex flex-col w-full">
-                <input
-                  type="text"
-                  {...register("description", { required: true })}
-                  className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
-
-                />
-              </div>
-              {errors.description && <span>Description is required</span>}
-
-            </div>
-          </section>
+          />
         </div>
+        {errors.title && <span>Title is required</span>}
+
+        <div className="flex flex-col w-full">
+          <input placeholder="Position"
+            type="text"
+            {...register("position", { required: true })}
+            className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md"
+
+          />
+        </div>
+        {errors.position && <span>Position is required</span>}
+
+        <div className="flex flex-col w-full">
+          <input placeholder="Description"
+            type="text"
+            {...register("description", { required: true })}
+            className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md"
+
+          />
+        </div>
+        {errors.description && <span>Description is required</span>}
 
         <button
           type="submit"
-          className="py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg self-end"
+          className="flex justify-center py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg self-end w-full"
         >
           <img src={saveIcon} /> save
         </button>
+
       </form>
     </div>
   );

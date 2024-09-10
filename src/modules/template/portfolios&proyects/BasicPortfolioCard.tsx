@@ -3,7 +3,7 @@ interface PortfolioProyectProviderProps {
   children: ReactNode;
 }
 
-const BasicTestCard: FC<PortfolioProyectProviderProps> = ({ children }) => {
+const BasicPortfolioCard: FC<PortfolioProyectProviderProps> = ({ children }) => {
 
 
   return (
@@ -16,4 +16,4 @@ const BasicTestCard: FC<PortfolioProyectProviderProps> = ({ children }) => {
   );
 };
 
-export default BasicTestCard;
+export default BasicPortfolioCard;

@@ -17,14 +17,25 @@ export interface RegisterUser {
     pass:string
 }
 
+export interface User {
+    id: string;
+    user_name: string;
+    name: string;
+    email: string;
+    gender: string;
+    birth: Date;
+    user_membership: string,
+    user_state: string,
+}
+
 export const registerRequest = async (user: object) => {
-   const result:RegisterUser =  await  axios.post(`/register`, user);
-   return result
+   const result =  await  axios.post(`/register`, user);
+   return result.data
 }
 
 export const loginRequest = async (user: object) => {
-   const result:LoginUser =  await  axios.post(`/login`, user);
-   return result
+   const result =  await  axios.post(`/login`, user);
+   return result.data
 }
 
 

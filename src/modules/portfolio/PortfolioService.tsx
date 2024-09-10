@@ -2,7 +2,9 @@ import axios from '../../libs/axios'
 
 export interface Portfolio {
     id:string
-    portfolio: string;
+    portfolio_user: string;
+    portfolio_type: string;
+    portfolio_style: string;
     name:string;
     title: string;
     description: string;
@@ -14,7 +16,8 @@ export interface Portfolio {
 
 export interface PullPortfolio {
    
-    portfolio: string;
+    portfolio_type: string;
+    portfolio_style: string;
     name:string;
     title: string;
     description: string;
@@ -24,7 +27,7 @@ export interface PullPortfolio {
     portfolio_state: string
 }
 export const portfoliosRequest = async () => {
-    const result =  await axios.get(`/profile-portfolios`);
+    const result =  await axios.get(`/portfolios`);
     return result.data
  }
 
@@ -33,21 +36,21 @@ export const portfoliosRequest = async () => {
    return result.data
 }
  export const getByIdRequest = async (id:string) => {
-    const result =  await axios.get(`/profile-portfolios/${id}`);
+    const result =  await axios.get(`/portfolios/${id}`);
     return result.data
  }
 export const createRequest = async (user: object) => {
-   const result =  await  axios.post(`/profile-portfolios`, user);
+   const result =  await  axios.post(`/portfolios`, user);
    return result.data
 }
 
 export const updateRequest = async (id:string,user: object) => {
-    const result =  await  axios.put(`/profile-portfolios/${id}`, user);
+    const result =  await  axios.put(`/portfolios/${id}`, user);
     return result.data
  }
 
  export const deleteRequest = async (id: string) => {
-    const result =  await  axios.delete(`/profile-portfolios/${id}`);
+    const result =  await  axios.delete(`/portfolios/${id}`);
     return result.data
  }
  

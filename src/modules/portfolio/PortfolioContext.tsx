@@ -1,21 +1,22 @@
 import { createContext, ReactNode, FC, useState, useEffect, useCallback } from 'react';
 import { Portfolio, PullPortfolio, createRequest, deleteRequest, getByIdRequest, portfoliosRequest, publicGetByIdRequest, updateRequest } from './PortfolioService'
-import {Proyect, publlicGetProyectsByPortfolioRequest} from '../portfolio-proyect/PortfolioProyectService'
+import { Proyect, publlicGetProyectsByPortfolioRequest } from '../proyect/portfolios/PortfolioProyectService'
 
 interface PortfolioContextType {
   getPortfolios: () => Promise<void>;
-  toEdit: (portfolio:object) => void;
+  toEdit: (portfolio: object) => void;
   getPortfolioById: (id: string) => Promise<Portfolio | null>;
-  publicGetPortfolioById: (id: string) => Promise<Portfolio | null>;
+  publicGetPortfolioById: (id: string) => void;
   createPortfolio: (newPortfolio: PullPortfolio) => Promise<void>;
   updatePortfolio: (id: string, updatedPortfolio: PullPortfolio) => Promise<void>;
-  publicGetPortfolioProyectsByPortfolio: (id:string) => Promise<void>;
+  publicGetPortfolioProyectsByPortfolio: (id: string) => Promise<void>;
   deletePortfolio: (id: string) => Promise<void>;
   portfolios: Portfolio[];
-  portfolio: Portfolio | null;
-  setId: (id:string) => void;
-  portfolioToEdit:  object;
-  portfolioId:  string;
+  setPortfolios: React.Dispatch<React.SetStateAction<Portfolio[]>>; portfolio: Portfolio | null;
+  setPortfolio: React.Dispatch<React.SetStateAction<Portfolio | null>>; 
+  setId: (id: string) => void;
+  portfolioToEdit: object;
+  portfolioId: string;
   errors: string[];
   portfolioProyects: Proyect[];
 }
@@ -35,22 +36,22 @@ interface ApiError {
 
 export const PortfolioProvider: FC<PortfolioProviderProps> = ({ children }) => {
 
-  const [portfolios, setPortfolios] = useState([]);
+  const [portfolios, setPortfolios] = useState<Portfolio[]>([]);
   const [portfolio, setPortfolio] = useState<Portfolio | null>(null);
   const [portfolioToEdit, setPortfolioToEdit] = useState({});
   const [portfolioId, setPortfolioId] = useState("");
-  const [errors,setErrors] = useState<string[]>([]);
+  const [errors, setErrors] = useState<string[]>([]);
   const [portfolioProyects, setPortfolioProyects] = useState([]);
 
 
-  const toEdit=(newPortfolio:object)=>{
+  const toEdit = (newPortfolio: object) => {
     setPortfolioToEdit(newPortfolio)
   }
-  const setId=(id:string)=>{
+  const setId = (id: string) => {
     setPortfolioId(id)
   }
 
-  const publicGetPortfolioProyectsByPortfolio =  useCallback(async (id:string) => {
+  const publicGetPortfolioProyectsByPortfolio = useCallback(async (id: string) => {
     try {
       const res = await publlicGetProyectsByPortfolioRequest(id);
       setPortfolioProyects(res);
@@ -62,7 +63,7 @@ export const PortfolioProvider: FC<PortfolioProviderProps> = ({ children }) => {
         setErrors(['Unknown error occurred']);
       }
     }
-  },[]); // El array vacío asegura que esta función no cambie
+  }, []); // El array vacío asegura que esta función no cambie
 
   const getPortfolios = useCallback(async () => {
     try {
@@ -102,7 +103,7 @@ export const PortfolioProvider: FC<PortfolioProviderProps> = ({ children }) => {
     try {
       const res = await publicGetByIdRequest(id);
       setPortfolio(res)
-      return res;
+     
     } catch (error) {
       console.error('Error during getPortfolioById:', error);
       if ((error as ApiError).response && (error as ApiError).response.data) {
@@ -110,7 +111,7 @@ export const PortfolioProvider: FC<PortfolioProviderProps> = ({ children }) => {
       } else {
         setErrors(['Unknown error occurred']);
       }
-      return null;
+    
     }
   }, []);
 
@@ -127,7 +128,7 @@ export const PortfolioProvider: FC<PortfolioProviderProps> = ({ children }) => {
         setErrors(['Unknown error occurred']);
       }
     }
-  }, [getPortfolios,portfolios]);
+  }, [getPortfolios, portfolios]);
 
   const updatePortfolio = useCallback(async (id: string, updatedPortfolio: PullPortfolio) => {
     try {
@@ -142,7 +143,7 @@ export const PortfolioProvider: FC<PortfolioProviderProps> = ({ children }) => {
         setErrors(['Unknown error occurred']);
       }
     }
-  }, [getPortfolios,portfolios]);
+  }, [getPortfolios, portfolios]);
 
   const deletePortfolio = useCallback(async (id: string) => {
     try {
@@ -157,11 +158,11 @@ export const PortfolioProvider: FC<PortfolioProviderProps> = ({ children }) => {
         setErrors(['Unknown error occurred']);
       }
     }
-  }, [getPortfolios,portfolios]);
+  }, [getPortfolios, portfolios]);
 
 
   return (
-    <PortfolioContext.Provider value={{portfolioProyects,publicGetPortfolioProyectsByPortfolio,toEdit,portfolioId, setId,portfolioToEdit,portfolio, publicGetPortfolioById,getPortfolios,getPortfolioById, createPortfolio, updatePortfolio, deletePortfolio, portfolios, errors }}>
+    <PortfolioContext.Provider value={{ portfolioProyects, publicGetPortfolioProyectsByPortfolio, toEdit, setPortfolio,portfolioId, setPortfolios, setId, portfolioToEdit, portfolio, publicGetPortfolioById, getPortfolios, getPortfolioById, createPortfolio, updatePortfolio, deletePortfolio, portfolios, errors }}>
       {children}
     </PortfolioContext.Provider>
   );

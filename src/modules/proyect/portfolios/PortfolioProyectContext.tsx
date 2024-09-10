@@ -53,6 +53,7 @@ export const PortfolioProyectProvider: FC<PortfolioProyectProviderProps> = ({ ch
     try {
       const res = await publlicGetProyectsByPortfolioRequest(id);
       setPortfolioProyects(res);
+      
     } catch (error) {
       console.error('Error during signup:', error);
       if ((error as ApiError).response && (error as ApiError).response.data) {
@@ -61,6 +62,7 @@ export const PortfolioProyectProvider: FC<PortfolioProyectProviderProps> = ({ ch
         setErrors(['Unknown error occurred']);
       }
     }
+    
   }, []); // El array vacío asegura que esta función no cambie
 
   const getPortfolioProyectById = useCallback(async (id: string) => {
@@ -125,7 +127,7 @@ export const PortfolioProyectProvider: FC<PortfolioProyectProviderProps> = ({ ch
   }, [getPortfolioProyects, portfolioProyects]);
 
   return (
-    <PortfolioProyectContext.Provider value={{ portfolioProyect: portfolioProyect, publicGetPortfolioProyectsByPortfolio, getPortfolioProyects: getPortfolioProyects, getPortfolioProyectById: getPortfolioProyectById, createPortfolioProyect: createPortfolioProyect, updatePortfolioProyect: updatePortfolioProyect, deletePortfolioProyect: deletePortfolioProyect, portfolioProyects: portfolioProyects, errors }}>
+    <PortfolioProyectContext.Provider value={{ portfolioProyect, publicGetPortfolioProyectsByPortfolio, getPortfolioProyects, getPortfolioProyectById: getPortfolioProyectById, createPortfolioProyect, updatePortfolioProyect, deletePortfolioProyect, portfolioProyects, errors }}>
       {children}
     </PortfolioProyectContext.Provider>
   );
