@@ -11,9 +11,9 @@ export interface PortfolioAbilitie {
 export interface AllPortfolioAbilitie {
     id: string
     abilitie_type: {
-        type:string,
-        type_value:string,
-        state:string
+        type: string,
+        type_value: string,
+        state: string
     };
     portfolio: string;
     comment: string;
@@ -26,12 +26,26 @@ export interface PullPortfolioAbilitie {
     comment: string;
     abilitie_state: string;
 }
+
+export interface PortfolioAbilitieType {
+    id: string;
+    type: string;
+    type_value: string;
+}
+
 export const portfolioAbilitiesRequest = async () => {
     const result = await axios.get(`/portfolio-abilities`);
     return result.data
 }
+
+export const portfolioAbilitieTypesRequest = async () => {
+    const result = await axios.get(`/portfolio-abilitie-types`);
+    return result.data
+}
+
 export const getByIdRequest = async (id: string) => {
-    const result = await axios.get(`/portfolio-abilities/${id}`);
+    const result = await axios.get(`/portfolio-abilitie/${id}`);
+    console.log(result)
     return result.data
 }
 export const createRequest = async (user: object) => {
