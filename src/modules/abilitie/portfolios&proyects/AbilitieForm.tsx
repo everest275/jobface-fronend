@@ -52,17 +52,21 @@ export default function PortfolioProyectForm() {
     const { register, handleSubmit, setValue, getValues, formState: { errors } } = useForm<FormValues>({ resolver });
     const navigate = useNavigate();
 
-    const { createPortfolioAbilitie, updatePortfolioAbilitie, getPortfolioAbilitieById } = usePortfolioAbilities();
+    const { createPortfolioAbilitie, updatePortfolioAbilitie, getPortfolioAbilitieById, getPortfolioAbilitieTypes, portfolioAbilitieTypes } = usePortfolioAbilities();
 
+    useEffect(() => {
+        getPortfolioAbilitieTypes()
+    }, [getPortfolioAbilitieTypes])
     useEffect(() => {
         if (id) {
 
             const loadPortfolio = async () => {
-                const proyect = await getPortfolioAbilitieById(id);
-                if (proyect) {
-                    setValue("abilitie_type", proyect.abilitie_type);
-                    setValue("portfolio", proyect.portfolio);
-                    setValue("comment", proyect.comment);
+                const res=await getPortfolioAbilitieById(id);
+                console.log("resultado de habilidad",res)
+                if (res) {
+                    setValue("abilitie_type", res.abilitie_type);
+                    setValue("portfolio", res.portfolio);
+                    setValue("comment", res.comment);
                 }
             };
             loadPortfolio();
@@ -96,13 +100,20 @@ export default function PortfolioProyectForm() {
             <form className="flex flex-col gap-1" onSubmit={onSubmit}>
 
                 <div className="flex flex-col">
-
-                    <input
-                        type="text" placeholder="Abilitie Type"
+                    <select
                         {...register("abilitie_type", { required: true })}
                         className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md"
-
-                    />
+                    >
+                        <option value="">Seleccione una habilidad</option>
+                        {
+                            portfolioAbilitieTypes && (
+                                portfolioAbilitieTypes.map((type) => (
+                                <option key={type.id} value={type.id}>
+                                    {type.type_value}
+                                </option>
+                            )))
+                        }
+                    </select>
                 </div>
                 {errors.abilitie_type && <span>Abilitie Type is required</span>}
 
