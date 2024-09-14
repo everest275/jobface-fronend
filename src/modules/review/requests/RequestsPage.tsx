@@ -7,7 +7,7 @@ import { userPortfolioReview } from "../portfolios&proyects/ReviewService";
 
 interface PortfolioReview {
   id: string
-  review_user:string
+  review_user: string
   reviewer_user: {
     id: string;
     user_name: string;
@@ -31,7 +31,7 @@ interface PortfolioProyectPageProps {
 const PortfolioProyectPage: React.FC<PortfolioProyectPageProps> = ({ id }) => {
 
 
-  const { publicGetPortfolioReviewsByPortfolio, portfolioReviews,responseUserPortfolioReview,pendingReviewsByPortfolio,pendingPortfolioReviews  } = usePortfolioReviews();
+  const { publicGetPortfolioReviewsByPortfolio, portfolioReviews, responseUserPortfolioReview, pendingReviewsByPortfolio, pendingPortfolioReviews } = usePortfolioReviews();
   const [visibleProjects, setVisibleProjects] = useState<PortfolioReview[]>([]);
 
 
@@ -73,34 +73,34 @@ const PortfolioProyectPage: React.FC<PortfolioProyectPageProps> = ({ id }) => {
 
     }
 
-  }, [setVisibleProjects, publicGetPortfolioReviewsByPortfolio,  pendingReviewsByPortfolio, id])
+  }, [setVisibleProjects, publicGetPortfolioReviewsByPortfolio, pendingReviewsByPortfolio, id])
 
 
 
-  const handleAceptar=async(obj:PortfolioReview)=>{
-    const pullRequest:userPortfolioReview = {
+  const handleAceptar = async (obj: PortfolioReview) => {
+    const pullRequest: userPortfolioReview = {
       reviewer_user: obj.reviewer_user.id,
-    portfolio: obj.portfolio,
-    comment: obj.comment,
-    is_accept: "0a1a80e2-7b96-48f1-9a01-5300ff27df36",
-    review_state: obj.review_state // Assuming this is a constant value
-    };   
+      portfolio: obj.portfolio,
+      comment: obj.comment,
+      is_accept: "0a1a80e2-7b96-48f1-9a01-5300ff27df36",
+      review_state: obj.review_state // Assuming this is a constant value
+    };
     console.log(pullRequest)
-       await responseUserPortfolioReview(obj.id,pullRequest);
-       pendingReviewsByPortfolio(id)
+    await responseUserPortfolioReview(obj.id, pullRequest);
+    pendingReviewsByPortfolio(id)
   }
 
-  const handleRechazar=async(obj:PortfolioReview)=>{
-    const pullRequest:userPortfolioReview = {
+  const handleRechazar = async (obj: PortfolioReview) => {
+    const pullRequest: userPortfolioReview = {
       reviewer_user: obj.reviewer_user.id,
-    portfolio: obj.portfolio,
-    comment: obj.comment,
-    is_accept: "860236b5-83b5-41b9-b80e-1c896174f427",
-    review_state: obj.review_state // Assuming this is a constant value
-    };   
+      portfolio: obj.portfolio,
+      comment: obj.comment,
+      is_accept: "860236b5-83b5-41b9-b80e-1c896174f427",
+      review_state: obj.review_state // Assuming this is a constant value
+    };
     console.log(pullRequest)
-        await responseUserPortfolioReview(obj.id,pullRequest);
-        pendingReviewsByPortfolio(id)
+    await responseUserPortfolioReview(obj.id, pullRequest);
+    pendingReviewsByPortfolio(id)
   }
 
 
@@ -111,7 +111,7 @@ const PortfolioProyectPage: React.FC<PortfolioProyectPageProps> = ({ id }) => {
     </div>;
   }
 
-  if (visibleProjects.length <= 0 ) {
+  if (visibleProjects.length <= 0) {
     return <div>
       <ProyectsNavbar />
       <div className="flex gap-2">
@@ -129,34 +129,34 @@ const PortfolioProyectPage: React.FC<PortfolioProyectPageProps> = ({ id }) => {
 
         {visibleProjects.map((review, index) => (
           review.is_accept === "a295ecf9-2c6d-4908-adbd-f2520bd8b274" && (
-              <div key={index} className="flex flex-col items-start border border-black rounded-md w-[600px]">
-                <div className="w-full">
+            <div key={index} className="flex flex-col items-start border border-black rounded-md w-[600px]">
+              <div className="w-full">
 
-                </div>
-                <section className="m-3">
-                  <h3 className="bg-clip-text text-transparent bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 text-lg md:text-xl font-bold">
-                    {review.reviewer_user.user_name}
-                  </h3>
-                  <h3 className="text-white font-semibold text-sm md:text-lg">{review.comment}</h3>
-                  <div className="flex gap-2 flex-wrap content-center mt-2">
-                    <button
-                      className="tracking-wide py-2 px-4 bg-zinc-800 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md hover:bg-zinc-700 rounded-lg flex gap-2"
-                      onClick={() => handleAceptar(review)}>
-                      <img src={editIcon} alt="" />aceptar
-                    </button>
-
-                    <button
-                      className="tracking-wide py-2 px-4 bg-zinc-800 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md hover:bg-zinc-700 rounded-lg flex gap-2"
-                      onClick={() => handleRechazar(review)}>
-                      <img src={deleteIcon} alt="" />rechazar
-                    </button>
-                  </div>
-                </section>
               </div>
-            )
+              <section className="m-3">
+                <h3 className="bg-clip-text text-transparent bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 text-lg md:text-xl font-bold">
+                  {review.reviewer_user.user_name}
+                </h3>
+                <h3 className="text-white font-semibold text-sm md:text-lg">{review.comment}</h3>
+                <div className="flex gap-2 flex-wrap content-center mt-2">
+                  <button
+                    className="tracking-wide py-2 px-4 bg-zinc-800 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md hover:bg-zinc-700 rounded-lg flex gap-2"
+                    onClick={() => handleAceptar(review)}>
+                    <img src={editIcon} alt="" />aceptar
+                  </button>
+
+                  <button
+                    className="tracking-wide py-2 px-4 bg-zinc-800 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md hover:bg-zinc-700 rounded-lg flex gap-2"
+                    onClick={() => handleRechazar(review)}>
+                    <img src={deleteIcon} alt="" />rechazar
+                  </button>
+                </div>
+              </section>
+            </div>
+          )
 
         ))}
-         {pendingPortfolioReviews.length === 0 && (
+        {pendingPortfolioReviews.length === 0 && (
           <h1 className="text-white font-semibold text-sm md:text-lg">No hay solicitudes pendientes</h1>
         )}
       </div>

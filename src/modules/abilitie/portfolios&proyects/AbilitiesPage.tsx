@@ -63,9 +63,9 @@ export const PortfolioProyectPage = () => {
     }
   }, [setVisibleProjects, publicGetPortfolioAbilitiesByPortfolio, id])
 
-  console.log(portfolioAbilities)
   const handleDelete = async (id: string) => {
     await deletePortfolioAbilitie(id);
+    location.reload()
   };
 
 

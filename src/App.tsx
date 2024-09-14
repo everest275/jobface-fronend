@@ -20,6 +20,7 @@ import PortfolioAbilitiePage from './modules/abilitie/portfolios&proyects/Abilit
 import PortfolioReviewPage from './modules/review/portfolios&proyects/ReviewPage'
 import PortfolioReviewForm from './modules/review/portfolios&proyects/ReviewForm'
 import BasicPortfolio from './modules/template/portfolios&proyects/BasicPortfolio'
+import PetitionsReceivedPage from './modules/review/petitions/PetitionsReceivedPage'
 
 function App() {
 
@@ -57,7 +58,7 @@ function App() {
                     <Route path='/add-portfolio-review/:portfolio' element={<><Navbar><PortfolioReviewForm /></Navbar></>} />
                     <Route path='/portfolio-review/:id/:portfolioId' element={<><Navbar><PortfolioReviewForm /></Navbar></>} />
                     <Route path='/portfolio-reviews/:id' element={<><Navbar><PortfolioReviewPage /></Navbar></>} />
-
+                    <Route path='/petitons-received' element={<><Navbar><PetitionsReceivedPage/></Navbar></>} />
 
                     <Route path='/profile' element={<><Navbar><ProfilePage /></Navbar></>} />
                   </Route>

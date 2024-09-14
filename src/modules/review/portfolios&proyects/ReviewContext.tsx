@@ -1,9 +1,10 @@
 import { createContext, ReactNode, FC, useState, useCallback } from 'react';
-import { PortfolioReview,  PullPortfolioReview, createRequest, deleteRequest, getByIdRequest, portfolioReviewsRequest, publlicGetReviewsByPortfolioRequest, responseRequest, sendedRequest, updateRequest, userPortfolioReview, usersRequest } from './ReviewService'
+import { PortfolioReview, PortfolioUserReview, PullPortfolioReview, createRequest, deleteRequest, getByIdRequest, petitionsRequest, portfolioReviewsRequest, publlicGetReviewsByPortfolioRequest, responseRequest, sendedRequest, updateRequest, userPortfolioReview, usersRequest } from './ReviewService'
 import { User } from '../../auth/AuthService';
 
 interface PortfolioReviewContextType {
   getPortfolioReviews: () => Promise<void>;
+  getPetitions: () => Promise<void>;
   pendingReviewsByPortfolio: (id: string) => Promise<void>;
   sendedReviewsByPortfolio: (id: string) => Promise<void>;
   successReviewsByPortfolio: (id: string) => Promise<void>;
@@ -16,6 +17,7 @@ interface PortfolioReviewContextType {
   responseUserPortfolioReview: (id: string, updatedPortfolio: userPortfolioReview) => Promise<void>;
   deletePortfolioReview: (id: string) => Promise<void>;
   portfolioReviews: PortfolioReview[];
+  petitions: PortfolioUserReview[] | null;
   pendingPortfolioReviews: PortfolioReview[];
   sendedPortfolioReviews: PortfolioReview[];
   successPortfolioReviews: PortfolioReview[];
@@ -45,6 +47,7 @@ export const PortfolioReviewProvider: FC<PortfolioReviewProviderProps> = ({ chil
   const [users, setUsers] = useState([]);
   const [portfolioReview, setPortfolioReview] = useState<PortfolioReview | null>(null);
   const [errors, setErrors] = useState<string[]>([]);
+  const [petitions, setPetitions] = useState<PortfolioUserReview[] | null>(null);
 
   const getPortfolioReviews = useCallback(async () => {
     try {
@@ -52,6 +55,20 @@ export const PortfolioReviewProvider: FC<PortfolioReviewProviderProps> = ({ chil
       setPortfolioReviews(res);
     } catch (error) {
       console.error('Error during portfolio reviews:', error);
+      if ((error as ApiError).response && (error as ApiError).response.data) {
+        setErrors((error as ApiError).response.data);
+      } else {
+        setErrors(['Unknown error occurred']);
+      }
+    }
+  }, []);
+
+  const getPetitions = useCallback(async () => {
+    try {
+      const res = await petitionsRequest();
+      setPetitions(res);
+    } catch (error) {
+      console.error('Error during peitions:', error);
       if ((error as ApiError).response && (error as ApiError).response.data) {
         setErrors((error as ApiError).response.data);
       } else {
@@ -78,7 +95,7 @@ export const PortfolioReviewProvider: FC<PortfolioReviewProviderProps> = ({ chil
     try {
       const res = await publlicGetReviewsByPortfolioRequest(id);
       setPortfolioReviews(res);
-      
+
     } catch (error) {
       console.error('Error during portfolio reviews:', error);
       if ((error as ApiError).response && (error as ApiError).response.data) {
@@ -94,7 +111,7 @@ export const PortfolioReviewProvider: FC<PortfolioReviewProviderProps> = ({ chil
       const res = await publlicGetReviewsByPortfolioRequest(id);
       const filteredReviews = res.filter((review: PortfolioReview) => review.is_accept === "a295ecf9-2c6d-4908-adbd-f2520bd8b274");
       setPendingPortfolioReviews(filteredReviews);
-      
+
     } catch (error) {
       console.error('Error during portfolio reviews:', error);
       if ((error as ApiError).response && (error as ApiError).response.data) {
@@ -110,7 +127,7 @@ export const PortfolioReviewProvider: FC<PortfolioReviewProviderProps> = ({ chil
       const res = await publlicGetReviewsByPortfolioRequest(id);
       const filteredReviews = res.filter((review: PortfolioReview) => review.is_accept === "0a1a80e2-7b96-48f1-9a01-5300ff27df36");
       setSuccessPortfolioReviews(filteredReviews);
-      
+
     } catch (error) {
       console.error('Error during portfolio reviews:', error);
       if ((error as ApiError).response && (error as ApiError).response.data) {
@@ -124,9 +141,9 @@ export const PortfolioReviewProvider: FC<PortfolioReviewProviderProps> = ({ chil
   const sendedReviewsByPortfolio = useCallback(async (id: string) => {
     try {
       const res = await publlicGetReviewsByPortfolioRequest(id);
-      const filteredReviews = res.filter((review: PortfolioReview) => review.is_accept === "e08214cf-8b66-4f5b-bc7b-b70d5542108d");
+      const filteredReviews = res.filter((review: PortfolioReview) => review.is_accept === "e08214cf-8b66-4f5b-bc7b-b70d5542108d" || review.is_accept === "860236b5-83b5-41b9-b80e-1c896174f427");
       setSendedPortfolioReviews(filteredReviews);
-      
+
     } catch (error) {
       console.error('Error during portfolio reviews:', error);
       if ((error as ApiError).response && (error as ApiError).response.data) {
@@ -200,7 +217,7 @@ export const PortfolioReviewProvider: FC<PortfolioReviewProviderProps> = ({ chil
     }
   }, [getPortfolioReviews, portfolioReviews]);
 
-  
+
   const responseUserPortfolioReview = useCallback(async (id: string, updatedPortfolio: userPortfolioReview) => {
     try {
       await responseRequest(id, updatedPortfolio);
@@ -232,7 +249,7 @@ export const PortfolioReviewProvider: FC<PortfolioReviewProviderProps> = ({ chil
   }, [getPortfolioReviews, portfolioReviews]);
 
   return (
-    <PortfolioReviewContext.Provider value={{ users,pendingPortfolioReviews,sendedPortfolioReviews,successPortfolioReviews,successReviewsByPortfolio,sendedReviewsByPortfolio,pendingReviewsByPortfolio,responseUserPortfolioReview,sendedUserPortfolioReview,getUsers,portfolioReview, publicGetPortfolioReviewsByPortfolio, getPortfolioReviews, getPortfolioReviewById,  createPortfolioReview, updatePortfolioReview, deletePortfolioReview, portfolioReviews, errors }}>
+    <PortfolioReviewContext.Provider value={{ users, pendingPortfolioReviews, getPetitions,petitions,sendedPortfolioReviews, successPortfolioReviews, successReviewsByPortfolio, sendedReviewsByPortfolio, pendingReviewsByPortfolio, responseUserPortfolioReview, sendedUserPortfolioReview, getUsers, portfolioReview, publicGetPortfolioReviewsByPortfolio, getPortfolioReviews, getPortfolioReviewById, createPortfolioReview, updatePortfolioReview, deletePortfolioReview, portfolioReviews, errors }}>
       {children}
     </PortfolioReviewContext.Provider>
   );
