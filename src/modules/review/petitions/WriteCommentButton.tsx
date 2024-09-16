@@ -1,145 +1,86 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Modal from "../../../components/Modal";
-import { usePortfolioReviews } from '../../../context/usePortfolioReviews';
-import { useAuth } from "../../../context/useAuth";
-
-interface User {
-    id: string;
-    user_name: string;
-}
+import { useForm, Resolver } from "react-hook-form";
 
 interface RequestsButtonProps {
     id: string;
 }
 
-const RequestsButton: React.FC<RequestsButtonProps> = ({ id }) => {
-    const { users, getUsers, sendedPortfolioReviews, sendedReviewsByPortfolio, sendedUserPortfolioReview, deletePortfolioReview } = usePortfolioReviews();
+type FormValues = {
+    comment: string;
+};
+
+type ValidationError = {
+    type: string;
+    message: string;
+};
+
+type Errors = {
+    [K in keyof FormValues]?: ValidationError;
+};
+
+const resolver: Resolver<FormValues> = async (values) => {
+    const errors: Errors = {};
+    if (!values.comment) {
+        errors.comment = {
+            type: "required",
+            message: "Comment es requerido.",
+        };
+    }
+
+    return {
+        values: Object.keys(errors).length ? {} : values,
+        errors,
+    };
+};
+
+const RequestsButton: React.FC<RequestsButtonProps> = () => {
+    const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({ resolver });
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { user } = useAuth()
-    const [searchTerm, setSearchTerm] = useState("");
-    const [filteredUsers, setFilteredUsers] = useState<User[]>([]); // Explicitly set the type to User[]
 
     const openModal = () =>
-        setIsModalOpen(true)
+        setIsModalOpen(true);
 
-        ;
     const closeModal = () => {
         setIsModalOpen(false)
-        setSearchTerm("");  // Restablece el campo de búsqueda
     }
 
-    useEffect(() => {
-        if (id) {
-            sendedReviewsByPortfolio(id)
-        }
-    }, [sendedReviewsByPortfolio, id])
+    const onSubmit = handleSubmit(async (data) => {
+        console.log(data)
+        // const pullRequest = {
+        //     portfolio_type: "0bc6bd16-86d4-429e-afe3-b213b56e2121",
+        //     portfolio_style: "3cccd400-708c-4f36-bb48-898c887583b6",
+        //     name: data.name,
+        //     title: data.title,
+        //     description: data.description,
+        //     about: data.about,
+        //     country: data.country,
+        //     city: data.city,
+        //     portfolio_state: "6b17756c-c1da-4636-821e-4b98ed59c02f" // Assuming this is a constant value
+        // };
 
-    useEffect(() => {
-        if (searchTerm.length > 2) {
-            getUsers();
-        } else {
-            setFilteredUsers([]);
-        }
-    }, [searchTerm, getUsers]);
+    });
 
-    useEffect(() => {
-        if (searchTerm.length > 2) {
-            setFilteredUsers(users.filter(user =>
-                user.user_name.toLowerCase().includes(searchTerm.toLowerCase())
-            ));
-        } else {
-            setFilteredUsers([]);
-        }
-    }, [searchTerm, users]);
-
-    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value);
-    };
-
-    const sendPetition = async (data: User) => {
-
-        const pullRequest = {
-            reviewer_user: data.id,
-            portfolio: id,
-            comment: "Without comment",
-            is_accept: "e08214cf-8b66-4f5b-bc7b-b70d5542108d",
-            review_state: "6b17756c-c1da-4636-821e-4b98ed59c02f" // Assuming this is a constant value
-        };
-        console.log(pullRequest)
-        await sendedUserPortfolioReview(pullRequest);
-        sendedReviewsByPortfolio(id);
-    }
-
-    const cancelPetition = async (reviewId: string) => {
-        await deletePortfolioReview(reviewId);
-        sendedReviewsByPortfolio(id);
-    }
 
     return (
         <div>
             <button onClick={openModal} className="w-52 tracking-wide py-1 px-2 bg-zinc-800 text-white transition ease-in duration-200 text-center font-semibold shadow-md hover:bg-zinc-700 rounded-md flex gap-2 justify-center items-center content-center h-9">
-                Enviar petición
+                Aceptar
             </button>
             <Modal isOpen={isModalOpen} onClose={closeModal}>
-                <form className="px-4 w-full max-w-[330px]">
+                <form className="px-4 w-full max-w-[330px]" onSubmit={onSubmit}>
                     <div className="relative">
-                        <input
-                            placeholder="Search"
-                            className="block w-full p-4 py-5 ps-10 text-lg text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 outline-none focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            id="default-search"
-                            type="search"
-                            value={searchTerm}
-                            onChange={handleSearchChange}
+                        <textarea
+                            className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
+                            {...register("comment")}
+                            placeholder="Description"
                         />
+                        {errors?.comment && <p className="text-red-600 text-sm">{`*${errors.comment.message}`}</p>}
                     </div>
+                    <button className="tracking-wide py-2 px-4 mt-3 text-xl bg-zinc-800 text-white transition ease-in duration-200 text-center font-semibold shadow-md hover:bg-zinc-700 rounded-lg flex gap-2" type="submit">
+                         Guardar
+                    </button>
                 </form>
-
-                {filteredUsers.length > 0 && (
-                    <div className="mt-4">
-                        <ul>
-                            {filteredUsers.map((usuario) => {
-                                const review = sendedPortfolioReviews.find(review => review.reviewer_user.id === usuario.id);
-                                const hasReview = !!review;
-
-                                return (
-                                    usuario.user_name != user?.user_name && (<div className="flex items-center gap-10 justify-between border-b border-gray-300" key={usuario.id}>
-                                        <li className="py-2 px-4">
-                                            {usuario.user_name}
-                                        </li>
-                                        <li>
-                                            {hasReview ? (
-                                                <button onClick={() => cancelPetition(review.id)} className="...">cancelar</button>
-                                            ) : (
-                                                <button onClick={() => sendPetition(usuario)} className="...">enviar</button>
-                                            )}
-                                        </li>
-                                    </div>)
-                                );
-                            })}
-                        </ul>
-                    </div>
-                )}
-
-                {sendedPortfolioReviews.length > 0 && (
-                    <div className="mt-4">
-                        <h1>Recientes</h1>
-                        <ul>
-                            {sendedPortfolioReviews.map((review) => {
-
-                                return (
-                                    <div className="flex items-center gap-10 justify-between border-b border-gray-300" key={review.id}>
-                                        <li className="py-2 px-4">
-                                            {review.reviewer_user.user_name}
-                                        </li>
-                                        <li>
-                                            <button onClick={() => cancelPetition(review.id)} className="...">cancelar</button>
-                                        </li>
-                                    </div>
-                                );
-                            })}
-                        </ul>
-                    </div>
-                )}
             </Modal>
         </div>
     );

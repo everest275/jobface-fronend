@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { usePortfolioReviews } from "../../../context/usePortfolioReviews";
-import editIcon from '../../../assets/edit.svg';
 import deleteIcon from '../../../assets/delete-icon.svg';
 import ProyectsNavbar from "../../../components/ProyectsNavbar";
 import { PortfolioUserReview, PullPetitionResponse } from "../portfolios&proyects/ReviewService";
+import WriteComment from './WriteCommentButton'
 
 const PortfolioProyectPage = () => {
 
@@ -112,12 +112,13 @@ const PortfolioProyectPage = () => {
                 </h3> */}
               <h3 className="text-white font-semibold text-sm md:text-lg">{review.portfolio.title}</h3>
               <div className="flex gap-2 flex-wrap content-center mt-2">
-                <button
+                {/* <button
                   className="tracking-wide py-2 px-4 bg-zinc-800 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md hover:bg-zinc-700 rounded-lg flex gap-2"
                 // onClick={() => handleAceptar(review)}
                 >
                   <img src={editIcon} alt="" />aceptar
-                </button>
+                </button> */}
+                <WriteComment id={""}/>
 
                 <button
                   className="tracking-wide py-2 px-4 bg-zinc-800 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md hover:bg-zinc-700 rounded-lg flex gap-2"
