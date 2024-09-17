@@ -7,26 +7,20 @@ import WriteComment from './WriteCommentButton'
 
 const PortfolioProyectPage = () => {
 
-
   const { getPetitions, petitions, updatePortfolioReview } = usePortfolioReviews();
   const [visibleProjects, setVisibleProjects] = useState<PortfolioUserReview[]>([]);
-
-
   const [projectLimit, setProjectLimit] = useState(8);
+
   useEffect(() => {
-
     setVisibleProjects([])
-
     setVisibleProjects([])
     getPetitions()
-
   }, [setVisibleProjects, getPetitions])
 
   useEffect(() => {
     setVisibleProjects([])
     if (petitions && petitions.length > 0) {
       setVisibleProjects([])
-
       setVisibleProjects(petitions.slice(0, projectLimit));
     }
   }, [setVisibleProjects, getPetitions, petitions, projectLimit]);
@@ -49,24 +43,6 @@ const PortfolioProyectPage = () => {
     };
   }, [setVisibleProjects]);
 
-
-
-
-  console.log(petitions)
-  // const handleAceptar = async (obj: PortfolioUserReview) => {
-  //   const pullRequest: PullPetitionResponse = {
-  //     reviewer_user: obj.reviewer_user,
-  //     review_user: obj.review_user.id,
-  //     portfolio: obj.portfolio.id,
-  //     comment: obj.comment,
-  //     is_accept: "0a1a80e2-7b96-48f1-9a01-5300ff27df36",
-  //     review_state: obj.review_state
-  //   };
-  //   console.log(pullRequest)
-  //   updatePortfolioReview(obj.id,pullRequest)
-
-  // }
-
   const handleRechazar = async (obj: PortfolioUserReview) => {
     const pullRequest: PullPetitionResponse = {
       reviewer_user: obj.reviewer_user,
@@ -78,6 +54,7 @@ const PortfolioProyectPage = () => {
     };
     console.log(pullRequest)
     updatePortfolioReview(obj.id, pullRequest)
+    getPetitions()
     location.reload()
 
   }
@@ -118,7 +95,7 @@ const PortfolioProyectPage = () => {
                 >
                   <img src={editIcon} alt="" />aceptar
                 </button> */}
-                <WriteComment id={""}/>
+                <WriteComment petition={review} commentType={1} />
 
                 <button
                   className="tracking-wide py-2 px-4 bg-zinc-800 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md hover:bg-zinc-700 rounded-lg flex gap-2"

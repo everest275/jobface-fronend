@@ -81,7 +81,7 @@ export const deleteProyectPictureRequest = async (id: string) => {
 
 //Obtener un proyecto imagen
 export const getByIdProyectPictureRequest = async (id: string) => {
-    const result = await axios.get(`/proyect-picture/${id}`);
+    const result = await axios.get(`/proyect-picture-public/${id}`);
     return result.data;
 }
 

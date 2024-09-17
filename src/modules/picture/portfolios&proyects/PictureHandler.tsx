@@ -37,7 +37,7 @@ const Base64ImageHandler: React.FC<PictureHandlerProps> = ({ id, isViewer, isPub
             }
           }
 
-          const pictureFind = await getPortfolioPictureByPortfolioId(id);
+          const pictureFind = await getPortfolioPictureByPortfolioIdPublic(id);
           if (pictureFind) {
             setPicture(pictureFind)
             setBase64Image(pictureFind.picture_data)
@@ -57,7 +57,7 @@ const Base64ImageHandler: React.FC<PictureHandlerProps> = ({ id, isViewer, isPub
             }
           }
 
-          const picture = await getProyectPictureById(id);
+          const picture = await getProyectPictureByIdPublic(id);
           if (picture) {
             setPicture(picture)
             setBase64Image(picture.picture_data)

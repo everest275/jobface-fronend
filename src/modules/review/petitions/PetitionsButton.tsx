@@ -63,7 +63,7 @@ const RequestsButton: React.FC<RequestsButtonProps> = ({ id }) => {
             portfolio: id,
             comment: "Without comment",
             is_accept: "e08214cf-8b66-4f5b-bc7b-b70d5542108d",
-            review_state: "6b17756c-c1da-4636-821e-4b98ed59c02f" // Assuming this is a constant value
+            review_state: "6b17756c-c1da-4636-821e-4b98ed59c02f"
         };
         console.log(pullRequest)
         await sendedUserPortfolioReview(pullRequest);
