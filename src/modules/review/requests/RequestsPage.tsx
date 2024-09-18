@@ -71,7 +71,6 @@ const PortfolioProyectPage: React.FC<PortfolioProyectPageProps> = ({ id }) => {
     await responseUserPortfolioReview(obj.id, pullRequest);
     publicGetPortfolioReviewsByPortfolio(id)
     pendingReviewsByPortfolio(id)
-    setVisibleProjects(portfolioReviews.slice(0, projectLimit));
 
   }
 
@@ -79,7 +78,6 @@ const PortfolioProyectPage: React.FC<PortfolioProyectPageProps> = ({ id }) => {
     await deletePortfolioReview(obj.id);
     publicGetPortfolioReviewsByPortfolio(id)
     pendingReviewsByPortfolio(id)
-    setVisibleProjects(portfolioReviews.slice(0, projectLimit));
 
   }
 
