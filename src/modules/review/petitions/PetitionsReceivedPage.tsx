@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { usePortfolioReviews } from "../../../context/usePortfolioReviews";
 import deleteIcon from '../../../assets/delete-icon.svg';
 import ProyectsNavbar from "../../../components/ProyectsNavbar";
-import { PortfolioUserReview, PullPetitionResponse } from "../portfolios&proyects/ReviewService";
+import { PortfolioUserReview } from "../portfolios&proyects/ReviewService";
 import WriteComment from './WriteCommentButton'
 
 const PortfolioProyectPage = () => {
 
-  const { getPetitions, petitions, updatePortfolioReview } = usePortfolioReviews();
+  const { getPetitions, petitions, deletePortfolioReview } = usePortfolioReviews();
   const [visibleProjects, setVisibleProjects] = useState<PortfolioUserReview[]>([]);
   const [projectLimit, setProjectLimit] = useState(8);
 
@@ -44,16 +44,7 @@ const PortfolioProyectPage = () => {
   }, [setVisibleProjects]);
 
   const handleRechazar = async (obj: PortfolioUserReview) => {
-    const pullRequest: PullPetitionResponse = {
-      reviewer_user: obj.reviewer_user,
-      review_user: obj.review_user.id,
-      portfolio: obj.portfolio.id,
-      comment: obj.comment,
-      is_accept: "860236b5-83b5-41b9-b80e-1c896174f427",
-      review_state: obj.review_state
-    };
-    console.log(pullRequest)
-    updatePortfolioReview(obj.id, pullRequest)
+    await deletePortfolioReview(obj.id);
     getPetitions()
     location.reload()
 
@@ -70,9 +61,6 @@ const PortfolioProyectPage = () => {
   return (
     <div className='flex flex-col'>
       <ProyectsNavbar />
-      <div className="flex gap-2">
-
-      </div>
       <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
 
         {visibleProjects.map((review, index) => (

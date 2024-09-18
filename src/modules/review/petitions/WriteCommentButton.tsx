@@ -55,12 +55,12 @@ const resolver: Resolver<FormValues> = async (values) => {
 
 const RequestsButton: React.FC<RequestsButtonProps> = ({ commentType, portfolio, petition }) => {
 
-    const{createPortfolioReview,updatePortfolioReview,getPetitions} = usePortfolioReviews()
+    const { createPortfolioReview, updatePortfolioReview, getPetitions } = usePortfolioReviews()
     const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({ resolver });
     const [isModalOpen, setIsModalOpen] = useState(false);
     useEffect(() => {
         getPetitions()
-      }, [ getPetitions])
+    }, [getPetitions])
 
     const openModal = () =>
         setIsModalOpen(true);
@@ -80,7 +80,7 @@ const RequestsButton: React.FC<RequestsButtonProps> = ({ commentType, portfolio,
                 review_state: petition.review_state
             };
             console.log(pullRequest)
-            updatePortfolioReview(petition.id,pullRequest)
+            updatePortfolioReview(petition.id, pullRequest)
             getPetitions()
 
         } else if (commentType === 2 && portfolio) {

@@ -15,6 +15,8 @@ interface PortfolioReviewContextType {
   updatePortfolioReview: (id: string, updatedPortfolio: PullPortfolioReview) => Promise<void>;
   sendedUserPortfolioReview: (newPortfolio: userPortfolioReview) => Promise<void>;
   responseUserPortfolioReview: (id: string, updatedPortfolio: userPortfolioReview) => Promise<void>;
+  // setPendingPortfolioReviews: React.Dispatch<React.SetStateAction<Portfolio[]>>; 
+  // setPortfolioReviews: React.Dispatch<React.SetStateAction<[]>>; 
   deletePortfolioReview: (id: string) => Promise<void>;
   portfolioReviews: PortfolioReview[];
   petitions: PortfolioUserReview[] | null;
@@ -40,8 +42,8 @@ interface ApiError {
 
 export const PortfolioReviewProvider: FC<PortfolioReviewProviderProps> = ({ children }) => {
 
-  const [portfolioReviews, setPortfolioReviews] = useState([]);
-  const [pendingPortfolioReviews, setPendingPortfolioReviews] = useState([]);
+  const [portfolioReviews, setPortfolioReviews] = useState<PortfolioReview[]>([]);
+  const [pendingPortfolioReviews, setPendingPortfolioReviews] = useState<PortfolioReview[]>([]);
   const [successPortfolioReviews, setSuccessPortfolioReviews] = useState([]);
   const [sendedPortfolioReviews, setSendedPortfolioReviews] = useState([]);
   const [users, setUsers] = useState([]);

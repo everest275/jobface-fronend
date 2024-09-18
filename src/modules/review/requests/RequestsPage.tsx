@@ -3,26 +3,8 @@ import { usePortfolioReviews } from "../../../context/usePortfolioReviews";
 import editIcon from '../../../assets/edit.svg';
 import deleteIcon from '../../../assets/delete-icon.svg';
 import ProyectsNavbar from "../../../components/ProyectsNavbar";
-import { userPortfolioReview } from "../portfolios&proyects/ReviewService";
+import { PortfolioReview, userPortfolioReview } from "../portfolios&proyects/ReviewService";
 
-interface PortfolioReview {
-  id: string
-  review_user: string
-  reviewer_user: {
-    id: string;
-    user_name: string;
-    name: string;
-    email: string;
-    gender: string;
-    birth: Date;
-    user_membership: string,
-    user_state: string,
-  };
-  portfolio: string;
-  comment: string;
-  is_accept: string;
-  review_state: string;
-}
 
 interface PortfolioProyectPageProps {
   id: string;
@@ -31,7 +13,7 @@ interface PortfolioProyectPageProps {
 const PortfolioProyectPage: React.FC<PortfolioProyectPageProps> = ({ id }) => {
 
 
-  const { publicGetPortfolioReviewsByPortfolio, portfolioReviews, responseUserPortfolioReview, pendingReviewsByPortfolio, pendingPortfolioReviews } = usePortfolioReviews();
+  const { publicGetPortfolioReviewsByPortfolio, portfolioReviews, responseUserPortfolioReview, deletePortfolioReview,pendingReviewsByPortfolio, pendingPortfolioReviews } = usePortfolioReviews();
   const [visibleProjects, setVisibleProjects] = useState<PortfolioReview[]>([]);
 
 
@@ -80,27 +62,25 @@ const PortfolioProyectPage: React.FC<PortfolioProyectPageProps> = ({ id }) => {
   const handleAceptar = async (obj: PortfolioReview) => {
     const pullRequest: userPortfolioReview = {
       reviewer_user: obj.reviewer_user.id,
-      portfolio: obj.portfolio,
+      portfolio: obj.portfolio.id,
       comment: obj.comment,
       is_accept: "0a1a80e2-7b96-48f1-9a01-5300ff27df36",
       review_state: obj.review_state // Assuming this is a constant value
     };
     console.log(pullRequest)
     await responseUserPortfolioReview(obj.id, pullRequest);
+    publicGetPortfolioReviewsByPortfolio(id)
     pendingReviewsByPortfolio(id)
+    setVisibleProjects(portfolioReviews.slice(0, projectLimit));
+
   }
 
   const handleRechazar = async (obj: PortfolioReview) => {
-    const pullRequest: userPortfolioReview = {
-      reviewer_user: obj.reviewer_user.id,
-      portfolio: obj.portfolio,
-      comment: obj.comment,
-      is_accept: "860236b5-83b5-41b9-b80e-1c896174f427",
-      review_state: obj.review_state // Assuming this is a constant value
-    };
-    console.log(pullRequest)
-    await responseUserPortfolioReview(obj.id, pullRequest);
+    await deletePortfolioReview(obj.id);
+    publicGetPortfolioReviewsByPortfolio(id)
     pendingReviewsByPortfolio(id)
+    setVisibleProjects(portfolioReviews.slice(0, projectLimit));
+
   }
 
 

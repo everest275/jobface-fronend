@@ -12,8 +12,29 @@ export interface PortfolioReview {
         user_membership: string,
         user_state: string
     };
-    review_user: string;
-    portfolio: string;
+    review_user:{
+        id: string;
+        user_name: string;
+        name: string;
+        email: string;
+        gender: string;
+        birth: Date;
+        user_membership: string,
+        user_state: string
+    };
+    portfolio: {
+        id: string
+        portfolio_user: string;
+        portfolio_type: string;
+        portfolio_style: string;
+        name: string;
+        title: string;
+        description: string;
+        about: string;
+        country: string;
+        city: string,
+        portfolio_state: string
+    };
     comment: string;
     is_accept: string;
     review_state: string;
