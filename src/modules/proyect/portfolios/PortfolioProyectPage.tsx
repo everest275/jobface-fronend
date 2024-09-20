@@ -96,9 +96,9 @@ export const PortfolioProyectPage = () => {
       >
         Crear nuevo proyecto
       </button>
-      <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
+      <div className='grid grid-cols-1 gap-4'>
         {visibleProjects.map((proyect, index) => (
-          <div key={index} className="flex flex-col items-start border border-black rounded-md w-[600px]">
+          <div key={index} className="flex flex-col items-start border border-black rounded-md w-full">
             <div className="w-full">
               <PictureHandler type={2} isViewer={false} isPublic={false} id={proyect.id} />
             </div>

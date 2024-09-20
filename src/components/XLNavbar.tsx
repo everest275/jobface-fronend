@@ -19,7 +19,7 @@ const Navbar: React.FC<NavbarProps> = ({ children }) => {
     return (
         <div>
             <nav className="hidden xl:flex">
-                <section className="fixed bottom-0 z-10 left-0 h-screen w-1/4 flex-col place-items-stretch pl-8 justify-center text-4xl gap-5 bg-black shadow-black shadow-2xl flex min-w-max">
+                <section className="fixed bottom-0 z-10 left-0 h-screen w-1/4 flex-col place-items-stretch pl-8 justify-center text-4xl gap-5 bg-black shadow-black shadow-2xl min-w-max">
                     <Link to='/' className="flex flex-row tracking-wide shadow-xl rounded-xl text-xl font-black p-4 bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-transparent md:text-4xl text">Authfaces</Link>
 
                     {isAuthenticated ? (<> <Link to='/' > <button className="flex items-center rounded-xl p-3 justify-start gap-4 font-semibold hover:bg-zinc-700 w-full" ><img src={homeIcon} alt="" /> Inicio</button></Link>

@@ -9,7 +9,7 @@ interface PortfolioProyectContextType {
   createPortfolioAbilitie: (newPortfolio: PullPortfolioAbilitie) => Promise<void>;
   updatePortfolioAbilitie: (id: string, updatedPortfolio: PullPortfolioAbilitie) => Promise<void>;
   deletePortfolioAbilitie: (id: string) => Promise<void>;
-  portfolioAbilities: AllPortfolioAbilitie[] | null;
+  portfolioAbilities: AllPortfolioAbilitie[];
   portfolioAbilitieTypes: PortfolioAbilitieType[] | null;
   portfolioAbilitie: PortfolioAbilitie | null;
 
@@ -30,7 +30,7 @@ interface ApiError {
 
 export const PortfolioAbilitieProvider: FC<PortfolioAbilitieProviderProps> = ({ children }) => {
 
-  const [portfolioAbilities, setPortfolioAbilities] = useState<AllPortfolioAbilitie[] | null>(null);
+  const [portfolioAbilities, setPortfolioAbilities] = useState<AllPortfolioAbilitie[]>([]);
   const [portfolioAbilitieTypes, setPortfolioAbilitieTypes] = useState<PortfolioAbilitieType[] | null>(null);
   const [portfolioAbilitie, setPortfolioAbilitie] = useState<PortfolioAbilitie | null>(null);
   const [errors, setErrors] = useState<string[]>([]);
@@ -70,7 +70,6 @@ export const PortfolioAbilitieProvider: FC<PortfolioAbilitieProviderProps> = ({ 
     try {
       const res = await publlicGetAbilitiesByPortfolioRequest(id);
       setPortfolioAbilities(res);
-      
     } catch (error) {
       console.error('Error during portfolio abilities:', error);
       if ((error as ApiError).response && (error as ApiError).response.data) {
@@ -86,7 +85,6 @@ export const PortfolioAbilitieProvider: FC<PortfolioAbilitieProviderProps> = ({ 
     try {
       const res = await getByIdRequest(id);
       setPortfolioAbilitie(res)
-      console.log(res)
       return res;
     } catch (error) {
       console.error('Error during portfolio abilities:', error);
@@ -118,7 +116,7 @@ export const PortfolioAbilitieProvider: FC<PortfolioAbilitieProviderProps> = ({ 
     try {
       await updateRequest(id, updatedPortfolio);
       getPortfolioAbilities()
-      portfolioAbilities
+      
     } catch (error) {
       console.error('Error during portfolio abilities:', error);
       if ((error as ApiError).response && (error as ApiError).response.data) {
@@ -127,13 +125,11 @@ export const PortfolioAbilitieProvider: FC<PortfolioAbilitieProviderProps> = ({ 
         setErrors(['Unknown error occurred']);
       }
     }
-  }, [getPortfolioAbilities, portfolioAbilities]);
+  }, [getPortfolioAbilities]);
 
   const deletePortfolioAbilitie = useCallback(async (id: string) => {
     try {
       await deleteRequest(id);
-      getPortfolioAbilities()
-      portfolioAbilities
     } catch (error) {
       console.error('Error during portfolio abilities:', error);
       if ((error as ApiError).response && (error as ApiError).response.data) {
@@ -142,7 +138,7 @@ export const PortfolioAbilitieProvider: FC<PortfolioAbilitieProviderProps> = ({ 
         setErrors(['Unknown error occurred']);
       }
     }
-  }, [getPortfolioAbilities, portfolioAbilities]);
+  }, []);
 
   return (
     <PortfolioAbilitieContext.Provider value={{ portfolioAbilitie, portfolioAbilitieTypes,getPortfolioAbilitieTypes,publicGetPortfolioAbilitiesByPortfolio, getPortfolioAbilities, getPortfolioAbilitieById,  createPortfolioAbilitie, updatePortfolioAbilitie, deletePortfolioAbilitie, portfolioAbilities, errors }}>

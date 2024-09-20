@@ -5,7 +5,6 @@ import deleteIcon from '../../../assets/delete-icon.svg';
 import ProyectsNavbar from "../../../components/ProyectsNavbar";
 import { PortfolioReview, userPortfolioReview } from "../portfolios&proyects/ReviewService";
 
-
 interface PortfolioProyectPageProps {
   id: string;
 }
@@ -13,7 +12,7 @@ interface PortfolioProyectPageProps {
 const PortfolioProyectPage: React.FC<PortfolioProyectPageProps> = ({ id }) => {
 
 
-  const { publicGetPortfolioReviewsByPortfolio, portfolioReviews, responseUserPortfolioReview, deletePortfolioReview,pendingReviewsByPortfolio, pendingPortfolioReviews } = usePortfolioReviews();
+  const { publicGetPortfolioReviewsByPortfolio, portfolioReviews, responseUserPortfolioReview, deletePortfolioReview, pendingReviewsByPortfolio, pendingPortfolioReviews } = usePortfolioReviews();
   const [visibleProjects, setVisibleProjects] = useState<PortfolioReview[]>([]);
 
 
@@ -103,7 +102,7 @@ const PortfolioProyectPage: React.FC<PortfolioProyectPageProps> = ({ id }) => {
       <div className="flex gap-2">
 
       </div>
-      <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
+      <div className='grid grid-cols-1 gap-4'>
 
         {visibleProjects.map((review, index) => (
           review.is_accept === "a295ecf9-2c6d-4908-adbd-f2520bd8b274" && (

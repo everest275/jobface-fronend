@@ -1,5 +1,5 @@
 import { createContext, ReactNode, FC, useState, useCallback } from 'react';
-import { PortfolioReview, PortfolioUserReview, PullPortfolioReview, createRequest, deleteRequest, getByIdRequest, petitionsRequest, portfolioReviewsRequest, publlicGetReviewsByPortfolioRequest, responseRequest, sendedRequest, updateRequest, userPortfolioReview, usersRequest } from './ReviewService'
+import { PortfolioReview, PullPortfolioReview, createRequest, deleteRequest, getByIdRequest, petitionsRequest, portfolioReviewsRequest, publlicGetReviewsByPortfolioRequest, responseRequest, sendedRequest, updateRequest, userPortfolioReview, usersRequest } from './ReviewService'
 import { User } from '../../auth/AuthService';
 
 interface PortfolioReviewContextType {
@@ -19,7 +19,7 @@ interface PortfolioReviewContextType {
   // setPortfolioReviews: React.Dispatch<React.SetStateAction<[]>>; 
   deletePortfolioReview: (id: string) => Promise<void>;
   portfolioReviews: PortfolioReview[];
-  petitions: PortfolioUserReview[] | null;
+  petitions: PortfolioReview[];
   pendingPortfolioReviews: PortfolioReview[];
   sendedPortfolioReviews: PortfolioReview[];
   successPortfolioReviews: PortfolioReview[];
@@ -49,7 +49,7 @@ export const PortfolioReviewProvider: FC<PortfolioReviewProviderProps> = ({ chil
   const [users, setUsers] = useState([]);
   const [portfolioReview, setPortfolioReview] = useState<PortfolioReview | null>(null);
   const [errors, setErrors] = useState<string[]>([]);
-  const [petitions, setPetitions] = useState<PortfolioUserReview[] | null>(null);
+  const [petitions, setPetitions] = useState<PortfolioReview[]>([]);
 
   const getPortfolioReviews = useCallback(async () => {
     try {

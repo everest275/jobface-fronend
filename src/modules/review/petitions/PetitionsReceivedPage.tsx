@@ -2,17 +2,16 @@ import { useEffect, useState } from "react";
 import { usePortfolioReviews } from "../../../context/usePortfolioReviews";
 import deleteIcon from '../../../assets/delete-icon.svg';
 import ProyectsNavbar from "../../../components/ProyectsNavbar";
-import { PortfolioUserReview } from "../portfolios&proyects/ReviewService";
+import { PortfolioReview } from "../portfolios&proyects/ReviewService";
 import WriteComment from './WriteCommentButton'
 
 const PortfolioProyectPage = () => {
 
   const { getPetitions, petitions, deletePortfolioReview } = usePortfolioReviews();
-  const [visibleProjects, setVisibleProjects] = useState<PortfolioUserReview[]>([]);
+  const [visibleProjects, setVisibleProjects] = useState<PortfolioReview[]>([]);
   const [projectLimit, setProjectLimit] = useState(8);
 
   useEffect(() => {
-    setVisibleProjects([])
     setVisibleProjects([])
     getPetitions()
   }, [setVisibleProjects, getPetitions])
@@ -43,10 +42,9 @@ const PortfolioProyectPage = () => {
     };
   }, [setVisibleProjects]);
 
-  const handleRechazar = async (obj: PortfolioUserReview) => {
+  const handleRechazar = async (obj: PortfolioReview) => {
     await deletePortfolioReview(obj.id);
     getPetitions()
-    location.reload()
 
   }
 
@@ -61,10 +59,10 @@ const PortfolioProyectPage = () => {
   return (
     <div className='flex flex-col'>
       <ProyectsNavbar />
-      <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
+      <div className='grid grid-cols-1 gap-4'>
 
         {visibleProjects.map((review, index) => (
-          <div key={index} className="flex flex-col items-start border border-black rounded-md w-[600px]">
+          <div key={index} className="flex flex-col items-start border border-black rounded-md w-full">
             <div className="w-full">
 
             </div>

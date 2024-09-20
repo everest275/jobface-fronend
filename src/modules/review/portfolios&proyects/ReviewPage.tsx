@@ -6,33 +6,26 @@ import deleteIcon from '../../../assets/delete-icon.svg';
 import ProyectsNavbar from "../../../components/ProyectsNavbar";
 import RequestsButton from '../requests/RequestsButton'
 import PetitionsButton from '../petitions/PetitionsButton'
-
-interface PortfolioReview {
-  id: string
-  reviewer_user: {
-    id: string;
-    user_name: string;
-    name: string;
-    email: string;
-    gender: string;
-    birth: Date;
-    user_membership: string,
-    user_state: string,
-  };
-  portfolio: string;
-  comment: string;
-  is_accept: string;
-  review_state: string;
-}
+import { PortfolioReview } from "./ReviewService";
 
 export const PortfolioProyectPage = () => {
 
   const { id } = useParams<{ id: string }>();
-  const { publicGetPortfolioReviewsByPortfolio, portfolioReviews, deletePortfolioReview, successPortfolioReviews,successReviewsByPortfolio} = usePortfolioReviews();
+  const { publicGetPortfolioReviewsByPortfolio, portfolioReviews, deletePortfolioReview, successPortfolioReviews, successReviewsByPortfolio } = usePortfolioReviews();
   const [visibleProjects, setVisibleProjects] = useState<PortfolioReview[]>([]);
   const navigate = useNavigate()
-
   const [projectLimit, setProjectLimit] = useState(8);
+
+  useEffect(() => {
+    setVisibleProjects([])
+    if (id) {
+      setVisibleProjects([])
+      publicGetPortfolioReviewsByPortfolio(id)
+      successReviewsByPortfolio(id)
+
+    }
+  }, [setVisibleProjects, publicGetPortfolioReviewsByPortfolio, successReviewsByPortfolio, id])
+
   useEffect(() => {
     setVisibleProjects([])
     if (portfolioReviews.length > 0) {
@@ -60,24 +53,10 @@ export const PortfolioProyectPage = () => {
     };
   }, [setVisibleProjects]);
 
-  useEffect(() => {
-
-    setVisibleProjects([])
-    if (id) {
-      setVisibleProjects([])
-      publicGetPortfolioReviewsByPortfolio(id)
-      successReviewsByPortfolio(id)
-    
-    }
-
-  }, [setVisibleProjects, publicGetPortfolioReviewsByPortfolio,successReviewsByPortfolio, id])
-
   const handleDelete = async (id: string) => {
     await deletePortfolioReview(id);
     location.reload()
   };
-
-
 
   if (!id) {
     return <div>
@@ -86,7 +65,7 @@ export const PortfolioProyectPage = () => {
     </div>;
   }
 
-  if (successPortfolioReviews.length === 0 ) {
+  if (successPortfolioReviews.length === 0) {
     return <div>
       <ProyectsNavbar />
       <div className="flex gap-2">
@@ -103,10 +82,10 @@ export const PortfolioProyectPage = () => {
         <PetitionsButton id={id} />
         <RequestsButton id={id} />
       </div>
-      <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
+      <div className='grid grid-cols-1 gap-4'>
         {visibleProjects.map((review, index) => (
           review.is_accept === "0a1a80e2-7b96-48f1-9a01-5300ff27df36" && (
-            <div key={index} className="flex flex-col items-start border border-black rounded-md w-[600px]">
+            <div key={index} className="flex flex-col items-start border border-black rounded-md w-full">
               <div className="w-full">
 
               </div>
@@ -131,7 +110,7 @@ export const PortfolioProyectPage = () => {
             </div>
           )
         ))}
-       
+
       </div>
     </div>
   )

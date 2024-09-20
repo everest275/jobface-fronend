@@ -4,35 +4,31 @@ import { useNavigate, useParams } from "react-router-dom";
 import editIcon from '../../../assets/edit.svg';
 import deleteIcon from '../../../assets/delete-icon.svg';
 import ProyectsNavbar from "../../../components/ProyectsNavbar";
-
-interface PortfolioAbilitie {
-  id: string
-  abilitie_type: {
-    type:string,
-    type_value:string,
-    state:string
-};
-  portfolio: string;
-  comment: string;
-  abilitie_state: string;
-}
+import { AllPortfolioAbilitie } from "./AbilitieService";
 
 export const PortfolioProyectPage = () => {
 
   const { id } = useParams<{ id: string }>();
-  const { publicGetPortfolioAbilitiesByPortfolio, portfolioAbilities, deletePortfolioAbilitie, } = usePortfolioAbilities();
-  const [visibleProjects, setVisibleProjects] = useState<PortfolioAbilitie[]>([]);
+  const { publicGetPortfolioAbilitiesByPortfolio, portfolioAbilities, deletePortfolioAbilitie } = usePortfolioAbilities();
+  const [visibleProjects, setVisibleProjects] = useState<AllPortfolioAbilitie[]>([]);
   const navigate = useNavigate()
-
   const [projectLimit, setProjectLimit] = useState(8);
+
+  useEffect(() => {
+
+    setVisibleProjects([])
+    if (id) {
+      setVisibleProjects([])
+      publicGetPortfolioAbilitiesByPortfolio(id)
+    }
+  }, [setVisibleProjects, publicGetPortfolioAbilitiesByPortfolio, id])
+
   useEffect(() => {
     setVisibleProjects([])
-    if(portfolioAbilities!=null){
-    if (portfolioAbilities.length > 0 ) {
+    if (portfolioAbilities && portfolioAbilities.length > 0) {
       setVisibleProjects([])
-
       setVisibleProjects(portfolioAbilities.slice(0, projectLimit));
-    }}
+    }
   }, [setVisibleProjects, publicGetPortfolioAbilitiesByPortfolio, id, portfolioAbilities, projectLimit]);
 
 
@@ -54,18 +50,11 @@ export const PortfolioProyectPage = () => {
     };
   }, [setVisibleProjects]);
 
-  useEffect(() => {
 
-    setVisibleProjects([])
-    if (id) {
-      setVisibleProjects([])
-      publicGetPortfolioAbilitiesByPortfolio(id)
-    }
-  }, [setVisibleProjects, publicGetPortfolioAbilitiesByPortfolio, id])
 
-  const handleDelete = async (id: string) => {
-    await deletePortfolioAbilitie(id);
-    location.reload()
+  const handleDelete = async (abilitieId: string) => {
+    await deletePortfolioAbilitie(abilitieId);
+    if (id) publicGetPortfolioAbilitiesByPortfolio(id)
   };
 
 
@@ -91,14 +80,14 @@ export const PortfolioProyectPage = () => {
     <div className='flex flex-col'>
       <ProyectsNavbar />
       <button
-          onClick={() => navigate(`/add-portfolio-abilitie/${id}`)}
-          className="tracking-wide py-1 px-2 bg-zinc-800 text-white transition ease-in duration-200 text-center font-semibold shadow-md hover:bg-zinc-700 rounded-md flex gap-2 justify-center items-center content-center h-9 w-60">
-          Crear nueva habilidad
-        </button>
-      <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
-       
+        onClick={() => navigate(`/add-portfolio-abilitie/${id}`)}
+        className="tracking-wide py-1 px-2 bg-zinc-800 text-white transition ease-in duration-200 text-center font-semibold shadow-md hover:bg-zinc-700 rounded-md flex gap-2 justify-center items-center content-center h-9 w-60">
+        Crear nueva habilidad
+      </button>
+      <div className='grid grid-cols-1 gap-4'>
+
         {visibleProjects.map((abilitie, index) => (
-          <div key={index} className="flex flex-col items-start border border-black rounded-md w-[600px]">
+          <div key={index} className="flex flex-col items-start border border-black rounded-md w-full">
             <div className="w-full">
 
             </div>

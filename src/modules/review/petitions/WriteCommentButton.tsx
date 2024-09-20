@@ -10,7 +10,7 @@ import {
     Resolver
 } from "react-hook-form";
 import {
-    PortfolioUserReview
+    PortfolioReview,
 } from "../portfolios&proyects/ReviewService";
 import {
     Portfolio
@@ -21,7 +21,7 @@ import { usePortfolioReviews } from "../../../context/usePortfolioReviews";
 
 interface RequestsButtonProps {
     commentType: number;
-    petition?: PortfolioUserReview
+    petition?: PortfolioReview
     portfolio?: Portfolio
 }
 
@@ -76,12 +76,12 @@ const RequestsButton: React.FC<RequestsButtonProps> = ({ commentType, portfolio,
                 review_user: petition.review_user.id,
                 portfolio: petition.portfolio.id,
                 comment: data.comment,
-                is_accept: "a295ecf9-2c6d-4908-adbd-f2520bd8b274",
+                is_accept: "0a1a80e2-7b96-48f1-9a01-5300ff27df36",
                 review_state: petition.review_state
             };
             console.log(pullRequest)
             updatePortfolioReview(petition.id, pullRequest)
-            getPetitions()
+           
 
         } else if (commentType === 2 && portfolio) {
             const pullRequest = {
@@ -93,9 +93,9 @@ const RequestsButton: React.FC<RequestsButtonProps> = ({ commentType, portfolio,
             };
             console.log(pullRequest)
             createPortfolioReview(pullRequest)
-            getPetitions()
+           
         }
-        closeModal()
+       location.reload()
     });
 
     return (

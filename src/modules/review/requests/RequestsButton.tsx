@@ -14,7 +14,7 @@ interface RequestsButtonProps {
 
   return (
     <div>
-      <button onClick={openModal} className="w-52 tracking-wide py-1 px-2 bg-zinc-800 text-white transition ease-in duration-200 text-center font-semibold shadow-md hover:bg-zinc-700 rounded-md flex gap-2 justify-center items-center content-center h-9">
+      <button onClick={openModal} className="w-40 tracking-wide py-1 px-2 bg-zinc-800 text-white transition ease-in duration-200 text-center font-semibold shadow-md hover:bg-zinc-700 rounded-md flex gap-2 justify-center items-center content-center h-9">
        Ver solicitudes
       </button>
 
