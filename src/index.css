@@ -6,6 +6,49 @@ body {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    background: black;
+    color: #dddddd;
+}
+
+.main-color {
     background: #141414;
-    color: white;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 20px;
+    background-color: transparent;
+    /* border-radius: 10px; */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #646464;    
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #646464;
+}
+
+
+.custom-scrollbar::-webkit-scrollbar-button {
+    background-color: transparent;
+    height: 16px;
+    width: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-scrollbar::-webkit-scrollbar-button:hover {
+    background-color: #646464;
+}
+
+.custom-scrollbar::-webkit-scrollbar-button:vertical:decrement {
+    background-image: url('./assets/up.svg');
+    background-size: cover;
+    background-position: 50% 50%;
+}
+
+.custom-scrollbar::-webkit-scrollbar-button:vertical:increment {
+    background-image: url('./assets/down.svg');
+    background-size: cover;
+    background-position: 50% 50%;
 }

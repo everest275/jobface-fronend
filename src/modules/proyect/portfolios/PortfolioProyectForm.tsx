@@ -1,8 +1,8 @@
 import { useForm, Resolver } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { usePortfolioProyects } from '../../../context/usePortfolioProyects';
-import PictureHandler from '../../picture/portfolios&proyects/PictureHandler'
+import { usePortfolioProyects } from '../../../hook/usePortfolioProyects';
+import PictureHandler from '../../picture/PictureHandler'
 
 import saveIcon from '../../../assets/upload.svg'
 

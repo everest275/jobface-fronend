@@ -11,11 +11,11 @@ import {
 } from "react-hook-form";
 import {
     PortfolioReview,
-} from "../portfolios&proyects/ReviewService";
+} from "../../../services/ReviewService";
 import {
     Portfolio
-} from "../../portfolio/PortfolioService";
-import { usePortfolioReviews } from "../../../context/usePortfolioReviews";
+} from "../../../services/PortfolioService";
+import { usePortfolioReviews } from "../../../hook/usePortfolioReviews";
 
 
 
@@ -106,16 +106,16 @@ const RequestsButton: React.FC<RequestsButtonProps> = ({ commentType, portfolio,
             </button>
 
             <Modal isOpen={isModalOpen} onClose={closeModal}>
-                <form className="px-4 w-full max-w-[330px]" onSubmit={onSubmit}>
+                <form className="px-4 w-full max-w-[330px] flex flex-col items-center" onSubmit={onSubmit}>
                     <textarea
-                        className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md my-2"
+                        className="w-full bg-zinc-900 text-white px-4 py-2 rounded-md my-2"
                         {...register("comment")}
                         placeholder="Description"
                     />
                     {errors?.comment && <p className="text-red-600 text-sm">{`*${errors.comment.message}`}</p>}
-                    <button className="tracking-wide py-2 px-4 mt-3 text-xl bg-zinc-800 text-white transition ease-in duration-200 text-center font-semibold shadow-md hover:bg-zinc-700 rounded-lg flex gap-2" type="submit">
-                        {commentType === 1 && "Guardar recomendacion"}
-                        {commentType === 2 && "Enviar solicitud"}
+                    <button className="tracking-wide bg-zinc-900  text-white transition ease-in duration-200 py-2 px-4 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 hover:bg-zinc-800 focus:ring-zinc-600 focus:ring-offset-blue-200 flex gap-2 rounded-lg" type="submit">
+                        {commentType === 1 && "Guardar"}
+                        {commentType === 2 && "Enviar"}
                     </button>
 
                 </form>

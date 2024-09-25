@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { usePortfolioReviews } from "../../../context/usePortfolioReviews";
+import { usePortfolioReviews } from "../../../hook/usePortfolioReviews";
 import deleteIcon from '../../../assets/delete-icon.svg';
-import ProyectsNavbar from "../../../components/ProyectsNavbar";
-import { PortfolioReview } from "../portfolios&proyects/ReviewService";
+import { PortfolioReview } from "../../../services/ReviewService";
 import WriteComment from './WriteCommentButton'
 
 const PortfolioProyectPage = () => {
@@ -50,15 +49,13 @@ const PortfolioProyectPage = () => {
 
   if (visibleProjects.length <= 0) {
     return <div>
-      <ProyectsNavbar />
-      <div className="flex gap-2">
+      <div className="flex gap-2 ">
       </div>
       <h1 className="text-white font-semibold text-sm md:text-lg">No hay solicitudes pendientes</h1>
     </div>;
   }
   return (
-    <div className='flex flex-col'>
-      <ProyectsNavbar />
+    <div className='flex flex-col w-screen'>
       <div className='grid grid-cols-1 gap-4'>
 
         {visibleProjects.map((review, index) => (

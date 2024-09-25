@@ -1,5 +1,5 @@
 import { useForm, Resolver } from "react-hook-form";
-import { useAuth } from '../../../context/useAuth'
+import { useAuth } from '../../../hook/useAuth'
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import VerificationForm from './VerficationForm'

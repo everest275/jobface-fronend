@@ -3,11 +3,11 @@ import { useForm } from "react-hook-form";
 import proyectsIcon from '../../../assets/work2.svg'
 import habilitiesIcon from '../../../assets/hablities.svg'
 import reviewsIcon from '../../../assets/reviews.svg'
-import PictureHandler from '../../picture/portfolios&proyects/PictureHandler'
+import PictureHandler from '../../picture/PictureHandler'
 import PortfolioProyectPage from "../../proyect/portfolios/PortfolioProyectPage";
 import CarouselMenu from "../../../components/CarouselMenu";
 import { useParams } from "react-router-dom";
-import { usePortfolios } from "../../../context/usePortfolios";
+import { usePortfolios } from "../../../hook/usePortfolios";
 import WriteComment from '../../review/petitions/WriteCommentButton';
 
 const BasicTest = () => {

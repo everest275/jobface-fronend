@@ -30,8 +30,10 @@ export default function ProyectsNavbar() {
     // }, []);
 
     return (
-        <nav className='fixed flex top-0 z-20 right-0 w-full justify-end items-center'>
-            <div className='flex bg-[#141414] w-full justify-end py-5'>
+        <nav className='fixed flex top-0 z-50 right-0 w-full justify-end items-center '>
+             
+            <div className='flex bg-transparent w-full justify-end py-5 text-sm'>
+               
 
                 <div className="relative"
                 // ref={addDropdownRef}
@@ -39,8 +41,9 @@ export default function ProyectsNavbar() {
                     <button
                         onClick={() => navigate('/add-portfolio')}
                         // onClick={() => setAddDropdownOpen(!isAddDropdownOpen)} 
-                        className="tracking-wide py-2 px-4 transition ease-in duration-200 text-center text-base font-semibold rounded-lg flex gap-2 justify-center items-center content-center">
-                        <img src={addIcon} alt="" />Crear
+                        className="flex items-center rounded-xl p-3 justify-start gap-1 hover:bg-zinc-700">
+                        <img src={addIcon} alt="" />
+                        <h1 className='sm:flex hidden'>Crear</h1>
                     </button>
                     {/* {isAddDropdownOpen && (
             <div className="absolute z-10 bg-[#141414] rounded-lg">
@@ -56,8 +59,9 @@ export default function ProyectsNavbar() {
                     <button
                         onClick={() => navigate('/portfolios')}
                         // onClick={() => setListDropdownOpen(!isListDropdownOpen)} 
-                        className="tracking-wide py-2 px-4 transition ease-in duration-200 text-center text-base font-semibold rounded-lg flex gap-2 justify-center items-center content-center">
-                        <img src={listIcon} alt="" />Proyectos
+                        className="flex items-center rounded-xl p-3 justify-start gap-1 hover:bg-zinc-700">
+                        <img src={listIcon} alt="" />
+                        <h1 className='sm:flex hidden'>Proyectos</h1>
                     </button>
                     {/* {isListDropdownOpen && (
             <div className="absolute z-10 bg-[#141414] rounded-lg flex flex-col gap-2">
@@ -74,8 +78,9 @@ export default function ProyectsNavbar() {
                     <button
                         onClick={() => navigate('/petitons-received')}
                         // onClick={() => setListDropdownOpen(!isListDropdownOpen)} 
-                        className="tracking-wide py-2 px-4 transition ease-in duration-200 text-center text-base font-semibold rounded-lg flex gap-2 justify-center items-center content-center">
-                        <img src={petitionsIcon} alt="" />Peticiones
+                        className="flex items-center rounded-xl p-3 justify-start gap-1 hover:bg-zinc-700">
+                        <img src={petitionsIcon} alt="" />
+                        <h1 className='sm:flex hidden'>Peticiones</h1>
                     </button>
                     {/* {isListDropdownOpen && (
             <div className="absolute z-10 bg-[#141414] rounded-lg flex flex-col gap-2">

@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { usePortfolioReviews } from "../../../context/usePortfolioReviews";
+import { usePortfolioReviews } from "../../../hook/usePortfolioReviews";
 import editIcon from '../../../assets/edit.svg';
 import deleteIcon from '../../../assets/delete-icon.svg';
-import ProyectsNavbar from "../../../components/ProyectsNavbar";
-import { PortfolioReview, userPortfolioReview } from "../portfolios&proyects/ReviewService";
+import { PortfolioReview, userPortfolioReview } from "../../../services/ReviewService";
 
 interface PortfolioProyectPageProps {
   id: string;
@@ -83,14 +82,12 @@ const PortfolioProyectPage: React.FC<PortfolioProyectPageProps> = ({ id }) => {
 
   if (!id) {
     return <div>
-      <ProyectsNavbar />
       <div className="text-white font-semibold text-sm md:text-lg">No se encontro portafolio</div>
     </div>;
   }
 
   if (visibleProjects.length <= 0) {
     return <div>
-      <ProyectsNavbar />
       <div className="flex gap-2">
       </div>
       <h1 className="text-white font-semibold text-sm md:text-lg">No hay solicitudes pendientes</h1>
@@ -98,7 +95,6 @@ const PortfolioProyectPage: React.FC<PortfolioProyectPageProps> = ({ id }) => {
   }
   return (
     <div className='flex flex-col'>
-      <ProyectsNavbar />
       <div className="flex gap-2">
 
       </div>

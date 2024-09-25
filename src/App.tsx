@@ -1,24 +1,24 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import LoginPage from './modules/auth/login/LoginPage'
 import RegisterPage from '../src/modules/auth/register/RegisterPage'
-import { AuthProvider } from './modules/auth/AuthContext'
-import {PortfolioReviewProvider} from './modules/review/portfolios&proyects/ReviewContext'
+import { AuthProvider } from './context/AuthContext'
+import {PortfolioReviewProvider} from './context/ReviewContext'
 import PortfolioFormPage from './modules/portfolio/PortfolioForm'
 import ProfilePage from './modules/profile/ProfilePage'
-import ProtectedRoutes from './routes/ProtectedRoutes'
-import Navbar from './components/XLNavbar'
-import { PortfolioProvider } from './modules/portfolio/PortfolioContext'
-import { PortfolioProyectProvider } from './modules/proyect/portfolios/PortfolioProyectContext'
-import { PortfolioAbilitieProvider } from './modules/abilitie/portfolios&proyects/AbilitieContext'
+import ProtectedRoutes from './modules/auth/redirect/AuthRedirect'
+import Toolbar from './components/Toolbar'
+import { PortfolioProvider } from './context/PortfolioContext'
+import { PortfolioProyectProvider } from './context/PortfolioProyectContext'
+import { PortfolioAbilitieProvider } from './context/AbilitieContext'
 import PortfolioProyectForm from './modules/proyect/portfolios/PortfolioProyectForm'
-import { PortfolioPictureProvider } from './modules/picture/portfolios&proyects/PictureContext'
+import { PortfolioPictureProvider } from './context/PictureContext'
 import PortfolioProyectPage from './modules/proyect/portfolios/PortfolioProyectPage'
 import HomePage from './modules/home/HomePage'
 import PortfolioPage from './modules/portfolio/PortfoliosPage'
-import PortfolioAbilitieForm from './modules/abilitie/portfolios&proyects/AbilitieForm'
-import PortfolioAbilitiePage from './modules/abilitie/portfolios&proyects/AbilitiesPage'
-import PortfolioReviewPage from './modules/review/portfolios&proyects/ReviewPage'
-import PortfolioReviewForm from './modules/review/portfolios&proyects/ReviewForm'
+import PortfolioAbilitieForm from './modules/abilitie/portfolios/AbilitieForm'
+import PortfolioAbilitiePage from './modules/abilitie/portfolios/AbilitiesPage'
+import PortfolioReviewPage from './modules/review/portfolios/ReviewPage'
+import PortfolioReviewForm from './modules/review/portfolios/ReviewForm'
 import BasicPortfolio from './modules/template/portfolios&proyects/BasicPortfolio'
 import PetitionsReceivedPage from './modules/review/petitions/PetitionsReceivedPage'
 
@@ -35,7 +35,7 @@ function App() {
                 <Routes>
                   {/* Public */}
 
-                  <Route path='/' element={<><Navbar><HomePage /></Navbar></>} />
+                  <Route path='/' element={<><Toolbar><HomePage /></Toolbar></>} />
                   <Route path='/login' element={<LoginPage />} />
                   <Route path='/register' element={<RegisterPage />} />
                   <Route path='/:id' element={<BasicPortfolio />} />
@@ -43,24 +43,24 @@ function App() {
                   <Route element={<ProtectedRoutes />}>
                     {/* Private */}
 
-                    <Route path='/portfolios' element={<><Navbar><PortfolioPage /></Navbar></>} />
-                    <Route path='portfolios/:id' element={<><Navbar><PortfolioFormPage /></Navbar></>} />
-                    <Route path='/add-portfolio' element={<><Navbar> <PortfolioFormPage /></Navbar></>} />
+                    <Route path='/portfolios' element={<><Toolbar><PortfolioPage /></Toolbar></>} />
+                    <Route path='portfolios/:id' element={<><Toolbar><PortfolioFormPage /></Toolbar></>} />
+                    <Route path='/add-portfolio' element={<><Toolbar> <PortfolioFormPage /></Toolbar></>} />
 
-                    <Route path='/add-portfolio-proyect/:portfolio' element={<><Navbar><PortfolioProyectForm /></Navbar></>} />
-                    <Route path='/portfolio-proyect/:id/:portfolio' element={<><Navbar><PortfolioProyectForm /></Navbar></>} />
-                    <Route path='/portfolio-proyects/:id' element={<><Navbar><PortfolioProyectPage /></Navbar></>} />
+                    <Route path='/add-portfolio-proyect/:portfolio' element={<><Toolbar><PortfolioProyectForm /></Toolbar></>} />
+                    <Route path='/portfolio-proyect/:id/:portfolio' element={<><Toolbar><PortfolioProyectForm /></Toolbar></>} />
+                    <Route path='/portfolio-proyects/:id' element={<><Toolbar><PortfolioProyectPage /></Toolbar></>} />
 
-                    <Route path='/add-portfolio-abilitie/:portfolio' element={<><Navbar><PortfolioAbilitieForm /></Navbar></>} />
-                    <Route path='/portfolio-abilitie/:id/:portfolio' element={<><Navbar><PortfolioAbilitieForm /></Navbar></>} />
-                    <Route path='/portfolio-abilities/:id' element={<><Navbar><PortfolioAbilitiePage /></Navbar></>} />
+                    <Route path='/add-portfolio-abilitie/:portfolio' element={<><Toolbar><PortfolioAbilitieForm /></Toolbar></>} />
+                    <Route path='/portfolio-abilitie/:id/:portfolio' element={<><Toolbar><PortfolioAbilitieForm /></Toolbar></>} />
+                    <Route path='/portfolio-abilities/:id' element={<><Toolbar><PortfolioAbilitiePage /></Toolbar></>} />
 
-                    <Route path='/add-portfolio-review/:portfolio' element={<><Navbar><PortfolioReviewForm /></Navbar></>} />
-                    <Route path='/portfolio-review/:id/:portfolioId' element={<><Navbar><PortfolioReviewForm /></Navbar></>} />
-                    <Route path='/portfolio-reviews/:id' element={<><Navbar><PortfolioReviewPage /></Navbar></>} />
-                    <Route path='/petitons-received' element={<><Navbar><PetitionsReceivedPage/></Navbar></>} />
+                    <Route path='/add-portfolio-review/:portfolio' element={<><Toolbar><PortfolioReviewForm /></Toolbar></>} />
+                    <Route path='/portfolio-review/:id/:portfolioId' element={<><Toolbar><PortfolioReviewForm /></Toolbar></>} />
+                    <Route path='/portfolio-reviews/:id' element={<><Toolbar><PortfolioReviewPage /></Toolbar></>} />
+                    <Route path='/petitons-received' element={<><Toolbar><PetitionsReceivedPage/></Toolbar></>} />
 
-                    <Route path='/profile' element={<><Navbar><ProfilePage /></Navbar></>} />
+                    <Route path='/profile' element={<><Toolbar><ProfilePage /></Toolbar></>} />
                   </Route>
                 </Routes>
               </BrowserRouter>

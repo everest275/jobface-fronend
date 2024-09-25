@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm, Resolver } from "react-hook-form";
-import { useAuth } from '../../../context/useAuth'
+import { useAuth } from '../../../hook/useAuth'
 
 type FormValues = {
   uno: string;

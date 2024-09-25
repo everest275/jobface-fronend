@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Modal from "../../../components/Modal";
-import { usePortfolioReviews } from '../../../context/usePortfolioReviews';
-import { useAuth } from "../../../context/useAuth";
+import { usePortfolioReviews } from '../../../hook/usePortfolioReviews';
+import { useAuth } from "../../../hook/useAuth";
 
 interface User {
     id: string;

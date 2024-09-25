@@ -3,7 +3,7 @@ export default function SMNavbar() {
     return (
         /* From Uiverse.io by sahilxkhadka */
         <nav className="flex xl:hidden">
-        <div className="fixed w-full bottom-0 flex-col place-items-stretch justify-center text-4xl gap-5 bg-black shadow-black shadow-2xl flex min-w-max">
+        <div className="fixed z-50 w-full bottom-0 flex-col place-items-stretch justify-center text-4xl gap-5 bg-black shadow-black shadow-2xl flex min-w-max">
             {/* <div className="text-center mb-6 bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-transparent text-3xl font-black">
                 Hover Them
             </div> */}

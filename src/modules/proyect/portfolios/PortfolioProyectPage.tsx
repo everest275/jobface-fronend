@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { usePortfolioProyects } from "../../../context/usePortfolioProyects";
+import { usePortfolioProyects } from "../../../hook/usePortfolioProyects";
 import { useNavigate, useParams } from "react-router-dom";
-import PictureHandler from '../../picture/portfolios&proyects/PictureHandler'
+import PictureHandler from '../../picture/PictureHandler'
 import viewIcon from '../../../assets/visibility-icon.svg';
 import editIcon from '../../../assets/edit.svg';
 import deleteIcon from '../../../assets/delete-icon.svg';
-import ProyectsNavbar from "../../../components/ProyectsNavbar";
 
 interface Project {
   id: string;
@@ -68,14 +67,12 @@ export const PortfolioProyectPage = () => {
 
   if (!id) {
     return <div>
-      <ProyectsNavbar />
       <div className="text-white font-semibold text-sm md:text-lg">No se encontro el portafolio</div>
     </div>;
   }
 
   if (visibleProjects.length <= 0) {
     return <div>
-      <ProyectsNavbar />
       <button
         onClick={() => navigate(`/add-portfolio-proyect/${id}`)}
         className="tracking-wide py-1 px-2 bg-zinc-800 text-white transition ease-in duration-200 text-center font-semibold shadow-md hover:bg-zinc-700 rounded-md flex gap-2 justify-center items-center content-center h-9 w-60"
@@ -89,7 +86,6 @@ export const PortfolioProyectPage = () => {
 
   return (
     <div className='flex flex-col'>
-      <ProyectsNavbar />
       <button
         onClick={() => navigate(`/add-portfolio-proyect/${id}`)}
         className="tracking-wide py-1 px-2 bg-zinc-800 text-white transition ease-in duration-200 text-center font-semibold shadow-md hover:bg-zinc-700 rounded-md flex gap-2 justify-center items-center content-center h-9 w-60"

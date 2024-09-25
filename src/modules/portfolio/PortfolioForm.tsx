@@ -1,11 +1,11 @@
 import { useForm, Resolver } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { usePortfolios } from '../../context/usePortfolios';
+import { usePortfolios } from '../../hook/usePortfolios';
 import deleteIcon from '../../assets/delete-icon.svg'
 import uploadIcon from '../../assets/upload.svg'
 import closeIcon from '../../assets/close.svg'
-import PictureHandler from '../picture/portfolios&proyects/PictureHandler'
+import PictureHandler from '../picture/PictureHandler'
 
 type FormValues = {
   name: string;
@@ -124,8 +124,8 @@ export default function PortfolioForm() {
   });
 
   return (
-    <div className="flex flex-col h-[calc(100vh-100px)] items-center justify-center">
-      <div className="bg-transparent max-w-md w-full p-10 rounded-md mt-[10%] flex flex-col gap-9">
+    <div className="flex flex-col">
+      <div className="max-w-md rounded-md flex flex-col gap-9 mt-2">
         {id &&(
            <PictureHandler type={1} isPublic={false} isViewer={true} id={id}/>
         )}

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useForm, Resolver } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from '../../../context/useAuth'
+import { useAuth } from '../../../hook/useAuth'
 import { LoginUser } from "../AuthService";
 
 type FormValues = {
