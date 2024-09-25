@@ -13,7 +13,7 @@ export default function XLNavbar() {
     const { isAuthenticated } = useAuth();
     return (
         <nav>
-            <section className="fixed bottom-0 left-0 h-screen flex-col text-sm gap-5 font-semibold">
+            <section className="fixed top-7 left-4 h-screen flex-col text-sm gap-5 font-semibold z-10">
 
                 <Link to='/' className="flex flex-row tracking-wide shadow-xl rounded-xl text-xl font-black p-4 bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-transparent">
                     Authfaces

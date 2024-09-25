@@ -1,29 +1,20 @@
 import { useEffect } from "react";
 import { usePortfolios } from '../../hook/usePortfolios';
-import workIcon from '../../assets/work2.svg';
-import abilitesIcon from '../../assets/hablities.svg';
-import reviewsIcon from '../../assets/reviews.svg';
 import PictureHandler from '../picture/PictureHandler'
-import { Link, useNavigate } from "react-router-dom";
-import { usePortfolioProyects } from '../../hook/usePortfolioProyects'
-import { usePortfolioAbilities } from '../../hook/usePortfolioAbilites'
-import { usePortfolioReviews } from '../../hook/usePortfolioReviews'
+import { useNavigate } from "react-router-dom";
+import CounterPortfolioAdds from '../../components/CounterPortfolioAdds'
 
 export default function PortfolioPage() {
   const { getPortfolios, portfolios, deletePortfolio, setPortfolios } = usePortfolios();
-  const { getPortfolioProyects, portfolioProyects } = usePortfolioProyects();
-  const { getPortfolioAbilities, portfolioAbilities } = usePortfolioAbilities()
-  const { getPortfolioReviews, portfolioReviews } = usePortfolioReviews()
+
 
   const navigator = useNavigate()
 
   useEffect(() => {
     setPortfolios([])
     getPortfolios();
-    getPortfolioAbilities()
-    getPortfolioProyects();
-    getPortfolioReviews()
-  }, [setPortfolios, getPortfolios, getPortfolioProyects, getPortfolioAbilities, getPortfolioReviews]);
+
+  }, [setPortfolios, getPortfolios]);
 
   const handleDelete = async (id: string) => {
     await deletePortfolio(id);
@@ -40,16 +31,6 @@ export default function PortfolioPage() {
       <div className='grid grid-cols-1 gap-4'>
 
         {portfolios.map((portfolio, index) => {
-          const projectCount = portfolioProyects.filter(
-            (project) => project.portfolio === portfolio.id
-          ).length;
-          const abilitiesCount = portfolioAbilities.filter(
-            (abilitie) => abilitie.portfolio === portfolio.id
-          ).length;
-          const reviewsCount = portfolioReviews.filter(
-            (review) => review.is_accept === "0a1a80e2-7b96-48f1-9a01-5300ff27df36" && review.portfolio.id === portfolio.id
-          ).length;
-
 
           return (
             <div key={index} className="flex flex-col items-start p-6 border-b border-[#646464]">
@@ -60,35 +41,7 @@ export default function PortfolioPage() {
 
                 <section className="flex flex-col gap-10 self-end">
 
-                  <div className="flex gap-7 sm:gap-4 text-xs font-bold">
-
-
-                    <Link className="flex flex-col justify-center items-center" to={`/portfolio-proyects/${portfolio.id}`}>
-                      <div className="flex justify-center items-center gap-1">
-                        <img src={workIcon} alt="proyects-icon" />
-                        <h1 className="">Works</h1>
-                      </div>
-                      {projectCount}
-                    </Link>
-
-
-                    <Link to={`/portfolio-abilities/${portfolio.id}`} className="flex flex-col items-center">
-                      <div className="flex justify-center items-center gap-1">
-                        <img src={abilitesIcon} alt="abilities-icon" />
-                        <h1 className="">Skills</h1>
-                      </div>
-                      {abilitiesCount}
-                    </Link>
-
-                    <Link to={`/portfolio-reviews/${portfolio.id}`} className="flex flex-col items-center">
-                      <div className="flex justify-center items-center gap-1">
-                        <img src={reviewsIcon} alt="reviews-icon" />
-                        <h1 className="">Reviews</h1>
-                      </div>
-                      {reviewsCount}
-                    </Link>
-
-                  </div>
+                 <CounterPortfolioAdds portfolioId={portfolio.id} />
 
                   <div className="flex gap-2 text-xs">
 

@@ -32,7 +32,7 @@ export default function ProyectsNavbar() {
     return (
         <nav className='fixed flex top-0 z-50 right-0 w-full justify-end items-center '>
              
-            <div className='flex bg-transparent w-full justify-end py-5 text-sm'>
+            <div className='flex bg-transparent w-full justify-end py-5 text-xs font-semibold gap-3'>
                
 
                 <div className="relative"
@@ -41,7 +41,7 @@ export default function ProyectsNavbar() {
                     <button
                         onClick={() => navigate('/add-portfolio')}
                         // onClick={() => setAddDropdownOpen(!isAddDropdownOpen)} 
-                        className="flex items-center rounded-xl p-3 justify-start gap-1 hover:bg-zinc-700">
+                        className="flex items-center rounded-xl p-3 justify-start gap-1 transition ease-in duration-200 hover:bg-[#646464] w-full">
                         <img src={addIcon} alt="" />
                         <h1 className='sm:flex hidden'>Crear</h1>
                     </button>
@@ -59,7 +59,7 @@ export default function ProyectsNavbar() {
                     <button
                         onClick={() => navigate('/portfolios')}
                         // onClick={() => setListDropdownOpen(!isListDropdownOpen)} 
-                        className="flex items-center rounded-xl p-3 justify-start gap-1 hover:bg-zinc-700">
+                        className="flex items-center rounded-xl p-3 justify-start gap-1 transition ease-in duration-200 hover:bg-[#646464] w-full">
                         <img src={listIcon} alt="" />
                         <h1 className='sm:flex hidden'>Proyectos</h1>
                     </button>
@@ -78,7 +78,7 @@ export default function ProyectsNavbar() {
                     <button
                         onClick={() => navigate('/petitons-received')}
                         // onClick={() => setListDropdownOpen(!isListDropdownOpen)} 
-                        className="flex items-center rounded-xl p-3 justify-start gap-1 hover:bg-zinc-700">
+                        className="flex items-center rounded-xl p-3 justify-start gap-1 transition ease-in duration-200 hover:bg-[#646464] w-full">
                         <img src={petitionsIcon} alt="" />
                         <h1 className='sm:flex hidden'>Peticiones</h1>
                     </button>
