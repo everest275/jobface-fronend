@@ -1,38 +1,34 @@
-import React, { useEffect } from 'react'
-import { usePortfolioProyects } from '../hook/usePortfolioProyects'
-import { usePortfolioAbilities } from '../hook/usePortfolioAbilites'
-import { usePortfolioReviews } from '../hook/usePortfolioReviews'
+import React, { useEffect, useState } from 'react'
 import workIcon from '../assets/work2.svg'
 import abilitesIcon from '../assets/hablities.svg';
 import reviewsIcon from '../assets/reviews.svg';
 import { Link } from 'react-router-dom';
+import { getPortfolioAbilitiesCounterRequest } from '../services/AbilitieService'
+import { getPortfolioProyectsCounterRequest } from '../services/PortfolioProyectService'
+import { getPortfolioReviewsCounterRequest } from '../services/ReviewService'
 
 interface CounterPortfolioAddsProps {
     portfolioId: string;
-
 }
 
 const CounterPortfolioAdds: React.FC<CounterPortfolioAddsProps> = ({ portfolioId }) => {
 
-    const { getPortfolioProyects, portfolioProyects } = usePortfolioProyects();
-    const { getPortfolioAbilities, portfolioAbilities } = usePortfolioAbilities()
-    const { getPortfolioReviews, portfolioReviews } = usePortfolioReviews()
+    const [abilitiesCounter, setAbilitiesCounter] = useState<number>(0);
+    const [reviewsCounter, setReviewsCounter] = useState<number>(0);
+    const [proyectsCounter, setProyectsCounter] = useState<number>(0);
+
+    async function getCounters() {
+        const abilities = await getPortfolioAbilitiesCounterRequest(portfolioId)
+        const reviews = await getPortfolioReviewsCounterRequest(portfolioId)
+        const proyects = await getPortfolioProyectsCounterRequest(portfolioId)
+        setAbilitiesCounter(abilities)
+        setReviewsCounter(reviews)
+        setProyectsCounter(proyects)
+    }
 
     useEffect(() => {
-        getPortfolioAbilities()
-        getPortfolioProyects();
-        getPortfolioReviews()
-    }, [getPortfolioProyects, getPortfolioAbilities, getPortfolioReviews]);
-
-    const projectCount = portfolioProyects.filter(
-        (project) => project.portfolio === portfolioId
-    ).length;
-    const abilitiesCount = portfolioAbilities.filter(
-        (abilitie) => abilitie.portfolio === portfolioId
-    ).length;
-    const reviewsCount = portfolioReviews.filter(
-        (review) => review.is_accept === "0a1a80e2-7b96-48f1-9a01-5300ff27df36" && review.portfolio.id === portfolioId
-    ).length;
+        getCounters()
+    });
 
     return (
         <div className="flex gap-7 sm:gap-4 text-xs font-bold">
@@ -43,7 +39,7 @@ const CounterPortfolioAdds: React.FC<CounterPortfolioAddsProps> = ({ portfolioId
                     <img src={workIcon} alt="proyects-icon" />
                     <h1 className="">Works</h1>
                 </div>
-                {projectCount}
+                {proyectsCounter}
             </Link>
 
 
@@ -52,7 +48,7 @@ const CounterPortfolioAdds: React.FC<CounterPortfolioAddsProps> = ({ portfolioId
                     <img src={abilitesIcon} alt="abilities-icon" />
                     <h1 className="">Skills</h1>
                 </div>
-                {abilitiesCount}
+                {abilitiesCounter}
             </Link>
 
             <Link to={`/portfolio-reviews/${portfolioId}`} className="flex flex-col items-center">
@@ -60,7 +56,7 @@ const CounterPortfolioAdds: React.FC<CounterPortfolioAddsProps> = ({ portfolioId
                     <img src={reviewsIcon} alt="reviews-icon" />
                     <h1 className="">Reviews</h1>
                 </div>
-                {reviewsCount}
+                {reviewsCounter}
             </Link>
 
         </div>

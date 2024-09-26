@@ -1,11 +1,12 @@
 import { useForm, Resolver } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { usePortfolios } from '../../hook/usePortfolios';
 import deleteIcon from '../../assets/delete-icon.svg'
 import uploadIcon from '../../assets/upload.svg'
 import closeIcon from '../../assets/close.svg'
 import PictureHandler from '../picture/PictureHandler'
+import { getRequest, putRequest,postRequest,deleteRequest } from '../../services/RequestService'
+import { ClientPortfolioRoutes } from './PortfolioConst'
 
 type FormValues = {
   name: string;
@@ -77,12 +78,11 @@ export default function PortfolioForm() {
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormValues>({ resolver });
   const navigate = useNavigate();
 
-  const { createPortfolio, updatePortfolio, getPortfolioById, deletePortfolio } = usePortfolios();
 
   useEffect(() => {
     if (id) {
       const loadPortfolio = async () => {
-        const portfolio = await getPortfolioById(id);
+        const portfolio = await getRequest(ClientPortfolioRoutes.PRIVATE,id);
         if (portfolio) {
           setValue("name", portfolio.name);
           setValue("title", portfolio.title);
@@ -94,10 +94,10 @@ export default function PortfolioForm() {
       };
       loadPortfolio();
     }
-  }, [id, setValue, getPortfolioById]);
+  }, [id, setValue]);
 
   const handleDelete=async(id:string)=>{
-      await deletePortfolio(id)
+      await deleteRequest(ClientPortfolioRoutes.PRIVATE,id)
       navigate('/portfolios')
   }
 
@@ -115,9 +115,9 @@ export default function PortfolioForm() {
     };
 
     if (id) {
-      await updatePortfolio(id, pullRequest);
+      await putRequest(ClientPortfolioRoutes.PRIVATE,id, pullRequest);
     } else {
-      await createPortfolio(pullRequest);
+      await postRequest(ClientPortfolioRoutes.PRIVATE,pullRequest);
     }
 
     navigate('/');

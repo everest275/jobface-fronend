@@ -1,41 +1,32 @@
 import { useEffect, useState } from "react";
-import { usePortfolioReviews } from "../../../hook/usePortfolioReviews";
 import { useNavigate, useParams } from "react-router-dom";
 import editIcon from '../../../assets/edit.svg';
 import deleteIcon from '../../../assets/delete-icon.svg';
 import RequestsButton from '../requests/RequestsButton'
 import PetitionsButton from '../petitions/PetitionsButton'
-import { PortfolioReview } from "../../../services/ReviewService";
+import { ClientReviewRoutes } from './ReviewConst'
+import { PortfolioReview } from './ReviewInterfaces'
+import { getRequest } from "../../../services/RequestService";
 
 export const PortfolioProyectPage = () => {
 
   const { id } = useParams<{ id: string }>();
-  const { publicGetPortfolioReviewsByPortfolio, portfolioReviews, deletePortfolioReview, successPortfolioReviews, successReviewsByPortfolio } = usePortfolioReviews();
+
   const [visibleProjects, setVisibleProjects] = useState<PortfolioReview[]>([]);
   const navigate = useNavigate()
   const [projectLimit, setProjectLimit] = useState(8);
 
-  useEffect(() => {
-    setVisibleProjects([])
-    if (id) {
-      setVisibleProjects([])
-      publicGetPortfolioReviewsByPortfolio(id)
-      successReviewsByPortfolio(id)
 
+
+  useEffect(() => {
+    async function getPortfolios() {
+      const res = await getRequest(ClientReviewRoutes.SUCCESS, id)
+      setVisibleProjects(res.slice(0, projectLimit));
     }
-  }, [setVisibleProjects, publicGetPortfolioReviewsByPortfolio, successReviewsByPortfolio, id])
+    getPortfolios()
+  }, [projectLimit, id])
 
   useEffect(() => {
-    setVisibleProjects([])
-    if (portfolioReviews.length > 0) {
-      setVisibleProjects([])
-
-      setVisibleProjects(portfolioReviews.slice(0, projectLimit));
-    }
-  }, [setVisibleProjects, publicGetPortfolioReviewsByPortfolio, id, portfolioReviews, projectLimit]);
-
-  useEffect(() => {
-    setVisibleProjects([])
     const handleScroll = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       const windowHeight = window.innerHeight;
@@ -50,10 +41,9 @@ export const PortfolioProyectPage = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [setVisibleProjects]);
+  });
 
   const handleDelete = async (id: string) => {
-    await deletePortfolioReview(id);
     location.reload()
   };
 
@@ -63,7 +53,7 @@ export const PortfolioProyectPage = () => {
     </div>;
   }
 
-  if (successPortfolioReviews.length === 0) {
+  if (visibleProjects.length === 0) {
     return <div>
       <div className="flex gap-2">
         <RequestsButton id={id} />

@@ -1,9 +1,11 @@
 import { useForm, Resolver } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { usePortfolioReviews } from '../../../hook/usePortfolioReviews';
-import {usePortfolios} from '../../../hook/usePortfolios'
 import saveIcon from '../../../assets/upload.svg'
+import { Portfolio } from '../../portfolio/PortfolioInterfaces'
+import { getRequest } from '../../../services/RequestService'
+import { ClientPortfolioRoutes } from '../../portfolio/PortfolioConst'
 
 type FormValues = {
     reviewer_user: string;
@@ -43,19 +45,19 @@ const resolver: Resolver<FormValues> = async (values) => {
 export default function PortfolioProyectForm() {
 
     const { id, portfolioId } = useParams<{ id: string, portfolioId: string }>();
-
     const { register, handleSubmit, setValue, getValues, formState: { errors } } = useForm<FormValues>({ resolver });
     const navigate = useNavigate();
+  const [portfolio, setPortfolio] = useState<Portfolio>();
 
     const { createPortfolioReview, updatePortfolioReview, getPortfolioReviewById } = usePortfolioReviews();
-    const {getPortfolioById,portfolio}=usePortfolios()
 
     useEffect(() => {
         if (id&&portfolioId) {
 
             const loadPortfolio = async () => {
                 const proyect = await getPortfolioReviewById(id);
-                const portfolioFinded = await getPortfolioById(id);
+                const portfolioFinded = await getRequest(ClientPortfolioRoutes.PRIVATE,id);
+                setPortfolio(portfolioFinded)
                 if (proyect&&portfolioFinded) {
                     setValue("review_user", portfolioFinded.portfolio_user);
                     setValue("reviewer_user", proyect.review_user.id);
@@ -65,7 +67,7 @@ export default function PortfolioProyectForm() {
             };
             loadPortfolio();
         }
-    }, [id,portfolioId,setValue, getPortfolioReviewById,getPortfolioById]);
+    }, [id,portfolioId,setValue, getPortfolioReviewById]);
 
 
     const onSubmit = handleSubmit(async (data) => {

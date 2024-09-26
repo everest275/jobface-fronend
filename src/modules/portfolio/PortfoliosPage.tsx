@@ -1,23 +1,31 @@
-import { useEffect } from "react";
-import { usePortfolios } from '../../hook/usePortfolios';
+import { useEffect, useState } from "react";
 import PictureHandler from '../picture/PictureHandler'
 import { useNavigate } from "react-router-dom";
 import CounterPortfolioAdds from '../../components/CounterPortfolioAdds'
+import { Portfolio } from './PortfolioInterfaces'
+import { getRequest, deleteRequest } from '../../services/RequestService'
+import { ClientPortfolioRoutes } from './PortfolioConst'
 
 export default function PortfolioPage() {
-  const { getPortfolios, portfolios, deletePortfolio, setPortfolios } = usePortfolios();
 
+  const [portfolios, setPortfolios] = useState<Portfolio[]>([]);
 
   const navigator = useNavigate()
 
+  async function getPortfolios() {
+    const res = await getRequest(ClientPortfolioRoutes.PRIVATE)
+    setPortfolios(res)
+  }
+
   useEffect(() => {
     setPortfolios([])
-    getPortfolios();
+    getPortfolios()
 
-  }, [setPortfolios, getPortfolios]);
+  }, []);
 
   const handleDelete = async (id: string) => {
-    await deletePortfolio(id);
+    await deleteRequest(ClientPortfolioRoutes.PRIVATE, id)
+    getPortfolios()
   };
 
   return (
@@ -41,7 +49,7 @@ export default function PortfolioPage() {
 
                 <section className="flex flex-col gap-10 self-end">
 
-                 <CounterPortfolioAdds portfolioId={portfolio.id} />
+                  <CounterPortfolioAdds portfolioId={portfolio.id} />
 
                   <div className="flex gap-2 text-xs">
 

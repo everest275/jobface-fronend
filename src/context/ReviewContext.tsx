@@ -1,6 +1,6 @@
 import { createContext, ReactNode, FC, useState, useCallback } from 'react';
 import { PortfolioReview, PullPortfolioReview, createRequest, deleteRequest, getByIdRequest, petitionsRequest, portfolioReviewsRequest, publlicGetReviewsByPortfolioRequest, responseRequest, sendedRequest, updateRequest, userPortfolioReview, usersRequest } from '../services/ReviewService'
-import { User } from '../modules/auth/AuthService';
+import { User } from '../services/AuthService';
 
 interface PortfolioReviewContextType {
   getPortfolioReviews: () => Promise<void>;

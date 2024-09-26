@@ -48,6 +48,10 @@ export const getByIdRequest = async (id: string) => {
     console.log(result)
     return result.data
 }
+export const getPortfolioAbilitiesCounterRequest = async (id: string) => {
+    const result = await axios.get(`/portfolio-abilities-counter/${id}`);
+    return result.data
+}
 export const createRequest = async (user: object) => {
     const result = await axios.post(`/portfolio-abilities`, user);
     return result.data

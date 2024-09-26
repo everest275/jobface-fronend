@@ -7,7 +7,6 @@ import PortfolioFormPage from './modules/portfolio/PortfolioForm'
 import ProfilePage from './modules/profile/ProfilePage'
 import ProtectedRoutes from './modules/auth/redirect/AuthRedirect'
 import Toolbar from './components/Toolbar'
-import { PortfolioProvider } from './context/PortfolioContext'
 import { PortfolioProyectProvider } from './context/PortfolioProyectContext'
 import { PortfolioAbilitieProvider } from './context/AbilitieContext'
 import PortfolioProyectForm from './modules/proyect/portfolios/PortfolioProyectForm'
@@ -26,7 +25,6 @@ function App() {
 
   return (
     <AuthProvider>
-      <PortfolioProvider>
         <PortfolioProyectProvider>
           <PortfolioPictureProvider>
             <PortfolioAbilitieProvider>
@@ -68,7 +66,6 @@ function App() {
             </PortfolioAbilitieProvider>
           </PortfolioPictureProvider>
         </PortfolioProyectProvider>
-      </PortfolioProvider>
     </AuthProvider>
   )
 }

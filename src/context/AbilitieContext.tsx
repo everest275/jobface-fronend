@@ -12,7 +12,6 @@ interface PortfolioProyectContextType {
   portfolioAbilities: AllPortfolioAbilitie[];
   portfolioAbilitieTypes: PortfolioAbilitieType[] | null;
   portfolioAbilitie: PortfolioAbilitie | null;
-
   errors: string[];
 }
 
@@ -50,6 +49,7 @@ export const PortfolioAbilitieProvider: FC<PortfolioAbilitieProviderProps> = ({ 
       }
     }
   }, []);
+
 
   const getPortfolioAbilitieTypes = useCallback(async () => {
     try {

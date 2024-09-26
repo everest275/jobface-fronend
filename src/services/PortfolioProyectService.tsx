@@ -43,6 +43,10 @@ export const publlicGetProyectsByPortfolioRequest = async (id: string) => {
     const result = await axios.get(`/portfolio-proyects-public/${id}`);
     return result.data
 }
+export const getPortfolioProyectsCounterRequest = async (id: string) => {
+    const result = await axios.get(`/portfolio-proyects-counter/${id}`);
+    return result.data
+}
 
 
 
