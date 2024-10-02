@@ -3,7 +3,7 @@ import addIcon from '../assets/add-icon.svg'
 import tuneIcon from '../assets/tune.svg'
 import uploadIcon from '../assets/upload.svg'
 import workIcon from '../assets/work.svg'
-import { usePortfolios } from '../context/usePortfolios'
+import { usePortfolios } from '../hook/usePortfolios'
 import { useNavigate } from 'react-router-dom';
 
 
