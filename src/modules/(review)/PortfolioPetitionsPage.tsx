@@ -52,8 +52,8 @@ const PetitionsReceivedPage = () => {
   return (
     <>
       <PortfolioMenus />
-      <div className='flex flex-col w-screen'>
-        <div className='grid grid-cols-1 gap-4'>
+      <div className='flex flex-col w-screen items-center'>
+        <div className='grid grid-cols-1 gap-4 mt-[5rem]'>
 
           {visibleProjects.map((review, index) => (
             <div key={index} className="flex flex-col items-start border border-black rounded-md w-full">

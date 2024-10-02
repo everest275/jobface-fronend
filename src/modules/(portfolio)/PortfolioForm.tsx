@@ -127,7 +127,7 @@ export default function PortfolioForm() {
   return (
     <>
     <PortfolioMenus/>
-    <div className="flex flex-col w-screen">
+    <div className="flex flex-col w-screen items-center">
       <div className="max-w-md rounded-md flex flex-col gap-9 mt-[5rem]">
         {id &&(
            <PictureHandler type={1} isPublic={false} isViewer={true} id={id}/>
