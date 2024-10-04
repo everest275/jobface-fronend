@@ -14,37 +14,38 @@ import PortfolioAbilitieForm from "../modules/(abilitie)/PortfolioAbilitieForm";
 import PortfolioAbilitiePage from "../modules/(abilitie)/PortfolioAbilitiePage";
 import PortfolioReviewPage from "../modules/(review)/PortfolioReviewPage";
 import PetitionsReceivedPage from "../modules/(review)/PortfolioPetitionsPage";
+import ToolbarPortfolio from '../modules/(toolbar)/ToolbarPortfolio'
 
 export default function AuthfaceRoutes() {
-    return (
-        <Routes>
-        {/* Public */}
+  return (
+    <Routes>
+      {/* Public */}
 
-        <Route path='/' element={<><Toolbar><HomePage /></Toolbar></>} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/register' element={<RegisterPage />} />
-        <Route path='/:id' element={<Basic/>} />
+      <Route path='/' element={<><Toolbar><HomePage /></Toolbar></>} />
+      <Route path='/login' element={<LoginPage />} />
+      <Route path='/register' element={<RegisterPage />} />
+      <Route path='/:id' element={<Basic />} />
 
-        <Route element={<Private />}>
-          {/* Private */}
+      <Route element={<Private />}>
+        {/* Private */}
 
-          <Route path='/portfolios' element={<><Toolbar><PortfolioPage /></Toolbar></>} />
-          <Route path='portfolios/:id' element={<><Toolbar><PortfolioForm /></Toolbar></>} />
-          <Route path='/add-portfolio' element={<><Toolbar> <PortfolioForm /></Toolbar></>} />
+        <Route path='/portfolios' element={<Toolbar><ToolbarPortfolio><PortfolioPage /></ToolbarPortfolio></Toolbar>} />
+        <Route path='portfolios/:id' element={<Toolbar><ToolbarPortfolio><PortfolioForm /></ToolbarPortfolio></Toolbar>} />
+        <Route path='/add-portfolio' element={<Toolbar> <ToolbarPortfolio><PortfolioForm /></ToolbarPortfolio></Toolbar>} />
 
-          <Route path='/add-portfolio-proyect/:portfolio' element={<><Toolbar><PortfolioProyectForm /></Toolbar></>} />
-          <Route path='/portfolio-proyect/:id/:portfolio' element={<><Toolbar><PortfolioProyectForm /></Toolbar></>} />
-          <Route path='/portfolio-proyects/:id' element={<><Toolbar><PortfolioProyectPage /></Toolbar></>} />
+        <Route path='/add-portfolio-proyect/:portfolio' element={<Toolbar><ToolbarPortfolio><PortfolioProyectForm /></ToolbarPortfolio></Toolbar>} />
+        <Route path='/portfolio-proyect/:id/:portfolio' element={<Toolbar><ToolbarPortfolio><PortfolioProyectForm /></ToolbarPortfolio></Toolbar>} />
+        <Route path='/portfolio-proyects/:id' element={<Toolbar><ToolbarPortfolio><PortfolioProyectPage /></ToolbarPortfolio></Toolbar>} />
 
-          <Route path='/add-portfolio-abilitie/:portfolio' element={<><Toolbar><PortfolioAbilitieForm /></Toolbar></>} />
-          <Route path='/portfolio-abilitie/:id/:portfolio' element={<><Toolbar><PortfolioAbilitieForm /></Toolbar></>} />
-          <Route path='/portfolio-abilities/:id' element={<><Toolbar><PortfolioAbilitiePage /></Toolbar></>} />
+        <Route path='/add-portfolio-abilitie/:portfolio' element={<Toolbar><ToolbarPortfolio><PortfolioAbilitieForm /></ToolbarPortfolio></Toolbar>} />
+        <Route path='/portfolio-abilitie/:id/:portfolio' element={<Toolbar><ToolbarPortfolio><PortfolioAbilitieForm /></ToolbarPortfolio></Toolbar>} />
+        <Route path='/portfolio-abilities/:id' element={<Toolbar><ToolbarPortfolio><PortfolioAbilitiePage /></ToolbarPortfolio></Toolbar>} />
 
-          <Route path='/portfolio-reviews/:id' element={<><Toolbar><PortfolioReviewPage /></Toolbar></>} />
-          <Route path='/portfolio-petitions' element={<><Toolbar><PetitionsReceivedPage/></Toolbar></>} />
+        <Route path='/portfolio-reviews/:id' element={<Toolbar><ToolbarPortfolio><PortfolioReviewPage /></ToolbarPortfolio></Toolbar>} />
+        <Route path='/portfolio-petitions' element={<Toolbar><ToolbarPortfolio><PetitionsReceivedPage /></ToolbarPortfolio></Toolbar>} />
 
-          <Route path='/profile' element={<><Toolbar><ProfilePage /></Toolbar></>} />
-        </Route>
-      </Routes>
-    )
+        <Route path='/profile' element={<><Toolbar><ProfilePage /></Toolbar></>} />
+      </Route>
+    </Routes>
+  )
 }

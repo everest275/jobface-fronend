@@ -16,7 +16,7 @@ interface AuthContextType {
   code: string;
   errors: string[];
 }
-
+   
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 interface AuthProviderProps {
@@ -38,10 +38,8 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const [code, setCode] = useState<string>("")
 
   const signup = async (pass: string) => {
-
     try {
       if (verifyUser) {
-
         verifyUser.pass = pass
         console.log(verifyUser)
         const result = await postRequest(ClientAuthRoutes.SIGNUP, verifyUser);
@@ -75,7 +73,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
   const signin = async (userData: LoginUser) => {
     try {
-      const result = await postRequest(ClientAuthRoutes.SIGNIN,userData);
+      const result = await postRequest(ClientAuthRoutes.SIGNIN, userData);
       setUser(result);
       setIsAuthenticated(true);
     } catch (error) {
@@ -90,7 +88,6 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
   const logout = async () => {
     try {
-
       Cookies.remove('token')
       setIsAuthenticated(false)
       setUser(null)
@@ -105,8 +102,6 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
-
-
   useEffect(() => {
     async function checklogin() {
       const cookies = Cookies.get()
@@ -115,7 +110,6 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         setLoading(false)
         return setUser(null)
       }
-
       try {
         const res = await getRequest(ClientAuthRoutes.VERIFY)
         if (!res) {
@@ -126,13 +120,11 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         setLoading(false)
         setIsAuthenticated(true)
         setUser(res)
-
       } catch (error) {
         setIsAuthenticated(false)
         setUser(null)
         setLoading(false)
       }
-
     }
     checklogin()
   }, [])

@@ -12,12 +12,10 @@ interface PortfolioProyectPageProps {
 const PortfolioProyectPage: React.FC<PortfolioProyectPageProps> = ({ id }) => {
 
   const [visibleProjects, setVisibleProjects] = useState<PortfolioReview[]>([]);
-
   const [projectLimit, setProjectLimit] = useState(8);
 
   const getPendingReviews = useCallback(async () => {
     const res = await getRequest(ClientReviewRoutes.PENDING, id)
-
     setVisibleProjects(res.slice(0, projectLimit));
   }, [id, projectLimit])
 
@@ -31,12 +29,10 @@ const PortfolioProyectPage: React.FC<PortfolioProyectPageProps> = ({ id }) => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.offsetHeight;
-
       if (scrollTop + windowHeight >= documentHeight - 5) {
         setProjectLimit(prevLimit => prevLimit + 8);
       }
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -55,25 +51,12 @@ const PortfolioProyectPage: React.FC<PortfolioProyectPageProps> = ({ id }) => {
     await putRequest(ClientReviewRoutes.RESPONSE, obj.id, pullRequest)
     getPendingReviews()
   }
+  
   const handleRechazar = async (obj: PortfolioReview) => {
     await deleteRequest(ClientReviewRoutes.PRIVATE, obj.id)
     getPendingReviews()
-
   }
 
-  if (!id) {
-    return <div>
-      <div className="text-white font-semibold text-sm md:text-lg">No se encontro portafolio</div>
-    </div>;
-  }
-
-  if (visibleProjects.length <= 0) {
-    return <div>
-      <div className="flex gap-2">
-      </div>
-      <h1 className="text-white font-semibold text-sm md:text-lg"> No hay solcitudes pendientes</h1>
-    </div>;
-  }
   return (
     <div className='flex flex-col'>
       <div className="flex gap-2">
@@ -106,11 +89,16 @@ const PortfolioProyectPage: React.FC<PortfolioProyectPageProps> = ({ id }) => {
               </div>
             </section>
           </div>
-
-
         ))}
-
       </div>
+      {!id &&
+        <div>
+          <h1 className="mt-[5rem] self-center text-white font-semibold text-sm md:text-lg">No se encontro portafolio</h1>
+        </div>
+      }
+      {visibleProjects.length <= 0 &&
+        <h1 className="mt-[5rem] self-center text-white font-semibold text-sm md:text-lg"> No hay solcitudes pendientes</h1>
+      }
     </div>
   )
 }

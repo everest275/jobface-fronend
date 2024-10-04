@@ -1,19 +1,21 @@
 import { useCallback, useEffect, useState } from "react";
-import deleteIcon from '../../assets/delete-icon.svg';
 import WriteComment from './PortfolioCommentButton'
 import { ClientReviewRoutes } from "./PortfolioReviewConst";
 import { deleteRequest, getRequest } from "../../services/RequestService";
 import { PortfolioReview } from "./PortfolioReviewInterfaces";
-import PortfolioMenus from "../(portfolio)/PortfolioMenus";
+import CardModel from "../../components/CardModel";
+import ButtonModel from "../../components/ButtonModel";
 
 const PetitionsReceivedPage = () => {
 
   const [visibleProjects, setVisibleProjects] = useState<PortfolioReview[]>([]);
   const [projectLimit, setProjectLimit] = useState(8);
+  const [showAnimation, setShowAnimation] = useState(false);
 
   const getPetitions = useCallback(async () => {
     const res = await getRequest(ClientReviewRoutes.RESPONSE)
     setVisibleProjects(res.slice(0, projectLimit));
+    setShowAnimation(true);
   }, [projectLimit])
 
   useEffect(() => {
@@ -31,12 +33,10 @@ const PetitionsReceivedPage = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.offsetHeight;
-
       if (scrollTop + windowHeight >= documentHeight - 5) {
         setProjectLimit(prevLimit => prevLimit + 8);
       }
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -48,55 +48,38 @@ const PetitionsReceivedPage = () => {
     getPetitions()
   }
 
-
   return (
-    <>
-      <PortfolioMenus />
-      <div className='flex flex-col w-screen items-center'>
-        <div className='grid grid-cols-1 gap-4 mt-[5rem]'>
 
-          {visibleProjects.map((review, index) => (
-            <div key={index} className="flex flex-col items-start border border-black rounded-md w-full">
-              <div className="w-full">
+    <div className={`mt-16 flex flex-col w-screen items-center transition-all duration-700 ease-in-out transform ${showAnimation ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
+      }`}>
+      <div className='grid grid-cols-1 gap-4 mt-[5rem] w-full'>
 
-              </div>
-              <section className="m-3">
+        {/* Se recorren las peticiones */}
+        {visibleProjects.map((review, index) => (
+          // Se integran a cards
+          <CardModel key={index}>
+            <article className="p-4">
+              <header>
                 <h3 className="text-white font-semibold text-sm md:text-lg">
                   °{review.review_user.user_name}
                 </h3>
-                {/* <h3 className="bg-clip-text text-transparent bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 text-lg md:text-xl font-bold">
-                  °{review.review_user.user_name}
-                </h3> */}
                 <h3 className="text-white font-semibold text-sm md:text-lg">{review.portfolio.title}</h3>
-                <div className="flex gap-2 flex-wrap content-center mt-2">
-                  {/* <button
-                  className="tracking-wide py-2 px-4 bg-zinc-800 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md hover:bg-zinc-700 rounded-lg flex gap-2"
-                // onClick={() => handleAceptar(review)}
-                >
-                  <img src={editIcon} alt="" />aceptar
-                </button> */}
-                  <WriteComment petition={review} commentType={1} />
-
-                  <button
-                    className="tracking-wide py-2 px-4 bg-zinc-800 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md hover:bg-zinc-700 rounded-lg flex gap-2"
-                    onClick={() => handleRechazar(review)}>
-                    <img src={deleteIcon} alt="" />rechazar
-                  </button>
-                </div>
-              </section>
-            </div>
-
-
-          ))}
-
-        </div>
-        {visibleProjects.length <= 0 &&
-
-          <h1 className="mt-[5rem] self-center text-white font-semibold text-sm md:text-lg">No hay solicitudes pendientes</h1>
-
-        }
+              </header>
+              <div className="flex gap-2 content-center mt-2">
+                <WriteComment petition={review} commentType={1} />
+                <ButtonModel action={() => handleRechazar(review)}>
+                  Rechazar
+                </ButtonModel>
+              </div>
+            </article>
+          </CardModel>
+        ))}
       </div>
-    </>
+      {/* Mensaje de no existen peticiones */}
+      {visibleProjects.length <= 0 &&
+        <h1 className="mt-[5rem] self-center text-white font-semibold text-sm md:text-lg">No hay solicitudes pendientes</h1>
+      }
+    </div>
   )
 }
 export default PetitionsReceivedPage;

@@ -48,15 +48,15 @@ const resolver: Resolver<FormValues> = async (values) => {
 export default function PortfolioProyectForm() {
 
     const { id, portfolio } = useParams<{ id: string, portfolio: string }>();
-
     const { register, handleSubmit, setValue, getValues, formState: { errors } } = useForm<FormValues>({ resolver });
     const navigate = useNavigate();
-
+    const [showAnimation, setShowAnimation] = useState(false); // Estado para controlar la animación
     const [portfolioAbilitieTypes, setPortfolioAbilitieTypes] = useState<PortfolioAbilitieType[]>([]);
 
     const getAbilities = useCallback(async () => {
         const res = await getRequest(ClientPortfolioAbilitieRoutes.TYPES)
         setPortfolioAbilitieTypes(res)
+        setShowAnimation(true);
     }, [])
 
     useEffect(() => {
@@ -79,31 +79,24 @@ export default function PortfolioProyectForm() {
         }
     }, [id, setValue]);
 
-
     const onSubmit = handleSubmit(async (data) => {
         const pullRequest = {
             abilitie_type: data.abilitie_type,
             portfolio: getValues("portfolio"),
             comment: data.comment,
         };
-
         if (id) {
             await putRequest(ClientPortfolioAbilitieRoutes.PRIVATE, id, pullRequest);
         } else if (portfolio) {
             pullRequest.portfolio = portfolio
             await postRequest(ClientPortfolioAbilitieRoutes.PRIVATE, pullRequest);
         }
-
         navigate(-1);
     });
 
     return (
-        <div className="lg:pl-20 lg:pr-20 min-h-screen flex flex-col items-center pr-5 pl-5 w-full">
-
-
-
+        <div className={`mt-16 flex flex-col w-screen items-center transition-all duration-700 ease-in-out transform ${showAnimation ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
             <form className="flex flex-col gap-1" onSubmit={onSubmit}>
-
                 <div className="flex flex-col">
                     <select
                         {...register("abilitie_type", { required: true })}
@@ -121,24 +114,20 @@ export default function PortfolioProyectForm() {
                     </select>
                 </div>
                 {errors.abilitie_type && <span>Abilitie Type is required</span>}
-
                 <div className="flex flex-col w-full">
                     <input placeholder="Comment"
                         type="text"
                         {...register("comment", { required: true })}
                         className="w-full bg-zinc-700 text-white px-4 py-2 rounded-md"
-
                     />
                 </div>
                 {errors.comment && <span>Comment is required</span>}
-
                 <button
                     type="submit"
                     className="flex justify-center py-2 px-4 bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg self-end w-full"
                 >
                     <img src={saveIcon} /> save
                 </button>
-
             </form>
         </div>
     );

@@ -9,14 +9,16 @@ import { deleteRequest, getRequest } from "../../services/RequestService";
 export const PortfolioProyectPage = () => {
 
   const { id } = useParams<{ id: string }>();
-
   const [visibleProjects, setVisibleProjects] = useState<AllPortfolioAbilitie[]>([]);
   const navigate = useNavigate()
   const [projectLimit, setProjectLimit] = useState(8);
+  const [showAnimation, setShowAnimation] = useState(false);
 
   const getAbilities = useCallback(async () => {
     const res = await getRequest(ClientPortfolioAbilitieRoutes.PUBLIC, id)
     setVisibleProjects(res.slice(0, projectLimit));
+    setShowAnimation(true);
+
   }, [id, projectLimit])
 
   useEffect(() => {
@@ -42,39 +44,22 @@ export const PortfolioProyectPage = () => {
   }, [setVisibleProjects]);
 
   const handleDelete = async (abilitieId: string) => {
-    await deleteRequest(ClientPortfolioAbilitieRoutes.PRIVATE,abilitieId)
+    await deleteRequest(ClientPortfolioAbilitieRoutes.PRIVATE, abilitieId)
     getAbilities()
   };
 
-  if (!id) {
-    return <div>
-      <div className="text-white font-semibold text-sm md:text-lg">No se encontro portafolio</div>
-    </div>;
-  }
-
-  if (visibleProjects.length <= 0) {
-    return <div>
-      <button
-        onClick={() => navigate(`/add-portfolio-abilitie/${id}`)}
-        className="tracking-wide py-1 px-2 bg-zinc-800 text-white transition ease-in duration-200 text-center font-semibold shadow-md hover:bg-zinc-700 rounded-md flex gap-2 justify-center items-center content-center h-9 w-60">
-        Crear nueva habilidad
-      </button>
-      <h1 className="text-white font-semibold text-sm md:text-lg">No hay habilidades creados, crear un nueva habilidad para ver</h1>
-    </div>;
-  }
   return (
-    <div className='flex flex-col'>
+    <div className={`mt-16 flex flex-col w-screen items-center transition-all duration-700 ease-in-out transform ${showAnimation ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
+      }`}>
       <button
         onClick={() => navigate(`/add-portfolio-abilitie/${id}`)}
         className="tracking-wide py-1 px-2 bg-zinc-800 text-white transition ease-in duration-200 text-center font-semibold shadow-md hover:bg-zinc-700 rounded-md flex gap-2 justify-center items-center content-center h-9 w-60">
         Crear nueva habilidad
       </button>
       <div className='grid grid-cols-1 gap-4'>
-
         {visibleProjects.map((abilitie, index) => (
           <div key={index} className="flex flex-col items-start border border-black rounded-md w-full">
             <div className="w-full">
-
             </div>
             <section className="m-3">
               <h3 className="bg-clip-text text-transparent bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 text-lg md:text-xl font-bold">
@@ -96,8 +81,13 @@ export const PortfolioProyectPage = () => {
             </section>
           </div>
         ))}
-        {visibleProjects.length <= 0 && (<h1>No proyects found</h1>)}
       </div>
+      {visibleProjects.length <= 0 &&
+        <h1 className="mt-[5rem] self-center text-white font-semibold text-sm md:text-lg">No hay habilidades creados, crear un nueva habilidad para ver</h1>
+      }
+      {!id &&
+        <h1 className="mt-[5rem] self-center text-white font-semibold text-sm md:text-lg">No se encontro portafolio</h1>
+      }
     </div>
   )
 }

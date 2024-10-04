@@ -1,10 +1,15 @@
+import { ReactNode } from "react";
 import { useNavigate } from "react-router-dom"
 
-export default function PortfolioMenus() {
+interface ToolbarPortfolioProps {
+  children: ReactNode;
+}
+
+const ToolbarPortfolio: React.FC<ToolbarPortfolioProps> = ({ children }) => {
 
   const navigator = useNavigate()
 
-  return (
+  return (<>
     <div className="fixed z-50 bg-black rounded-xl rounded-r-none w-[100%] xl:w-[70%] -mt-1 md:mt-0">
         <div className="p-3 flex gap-4">
         <button
@@ -30,5 +35,8 @@ export default function PortfolioMenus() {
           
         </div>
       </div>
+      {children}
+      </> 
   )
 }
+export default ToolbarPortfolio
