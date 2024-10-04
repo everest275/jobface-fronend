@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import editIcon from '../../assets/edit.svg';
 import deleteIcon from '../../assets/delete-icon.svg';
 import { PortfolioReview, userPortfolioReview } from "./PortfolioReviewInterfaces";
-import { getRequest, putRequest, deleteRequest } from "../../services/RequestService";
+import { useRequestServices } from "../../services/RequestService";
 import { ClientReviewRoutes } from "./PortfolioReviewConst";
 
 interface PortfolioProyectPageProps {
@@ -11,13 +11,14 @@ interface PortfolioProyectPageProps {
 
 const PortfolioProyectPage: React.FC<PortfolioProyectPageProps> = ({ id }) => {
 
+  const {getRequest, putRequest, deleteRequest}=useRequestServices()
   const [visibleProjects, setVisibleProjects] = useState<PortfolioReview[]>([]);
   const [projectLimit, setProjectLimit] = useState(8);
 
   const getPendingReviews = useCallback(async () => {
     const res = await getRequest(ClientReviewRoutes.PENDING, id)
     setVisibleProjects(res.slice(0, projectLimit));
-  }, [id, projectLimit])
+  }, [getRequest,id, projectLimit])
 
   useEffect(() => {
     getPendingReviews()

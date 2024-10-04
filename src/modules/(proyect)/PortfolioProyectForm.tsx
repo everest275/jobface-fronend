@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PictureHandler from '../(picture)/PictureHandler'
 import saveIcon from '../../assets/upload.svg'
-import { getRequest, postRequest, putRequest } from "../../services/RequestService";
+import { useRequestServices } from "../../services/RequestService";
 import { ClientPortfolioProyectRoutes } from "./PortfolioProyectConst";
 
 type FormValues = {
@@ -54,6 +54,7 @@ const resolver: Resolver<FormValues> = async (values) => {
 export default function PortfolioProyectForm() {
 
   const { id, portfolio } = useParams<{ id: string, portfolio: string }>();
+  const {getRequest, putRequest, postRequest}=useRequestServices()
   const { register, handleSubmit, setValue, getValues, formState: { errors } } = useForm<FormValues>({ resolver });
   const [showAnimation, setShowAnimation] = useState(false); 
   const navigate = useNavigate();
@@ -72,7 +73,7 @@ export default function PortfolioProyectForm() {
       loadPortfolio();
     }
     setShowAnimation(true);
-  }, [id, setValue]);
+  }, [getRequest,id, setValue]);
 
   const onSubmit = handleSubmit(async (data) => {
     const pullRequest = {

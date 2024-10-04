@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import saveIcon from '../../assets/upload.svg'
 import { PortfolioAbilitieType } from "./PortfolioAbilitieInterface";
-import { getRequest, postRequest, putRequest } from "../../services/RequestService";
+import { useRequestServices } from "../../services/RequestService";
 import { ClientPortfolioAbilitieRoutes } from "./PortfolioAbilitieConst";
 
 type FormValues = {
@@ -52,12 +52,13 @@ export default function PortfolioProyectForm() {
     const navigate = useNavigate();
     const [showAnimation, setShowAnimation] = useState(false); // Estado para controlar la animación
     const [portfolioAbilitieTypes, setPortfolioAbilitieTypes] = useState<PortfolioAbilitieType[]>([]);
+    const { getRequest, putRequest, postRequest } = useRequestServices();
 
     const getAbilities = useCallback(async () => {
         const res = await getRequest(ClientPortfolioAbilitieRoutes.TYPES)
         setPortfolioAbilitieTypes(res)
         setShowAnimation(true);
-    }, [])
+    }, [getRequest])
 
     useEffect(() => {
         getAbilities()
@@ -77,7 +78,7 @@ export default function PortfolioProyectForm() {
             };
             loadPortfolio();
         }
-    }, [id, setValue]);
+    }, [getRequest,id, setValue]);
 
     const onSubmit = handleSubmit(async (data) => {
         const pullRequest = {

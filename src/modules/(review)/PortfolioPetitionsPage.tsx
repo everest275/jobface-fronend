@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import WriteComment from './PortfolioCommentButton'
 import { ClientReviewRoutes } from "./PortfolioReviewConst";
-import { deleteRequest, getRequest } from "../../services/RequestService";
+import { useRequestServices } from "../../services/RequestService";
 import { PortfolioReview } from "./PortfolioReviewInterfaces";
 import CardModel from "../../components/CardModel";
 import ButtonModel from "../../components/ButtonModel";
 
 const PetitionsReceivedPage = () => {
 
+  const {getRequest, deleteRequest}=useRequestServices()
   const [visibleProjects, setVisibleProjects] = useState<PortfolioReview[]>([]);
   const [projectLimit, setProjectLimit] = useState(8);
   const [showAnimation, setShowAnimation] = useState(false);
@@ -16,12 +17,8 @@ const PetitionsReceivedPage = () => {
     const res = await getRequest(ClientReviewRoutes.RESPONSE)
     setVisibleProjects(res.slice(0, projectLimit));
     setShowAnimation(true);
-  }, [projectLimit])
+  }, [getRequest,projectLimit])
 
-  useEffect(() => {
-    setVisibleProjects([])
-    getPetitions()
-  }, [setVisibleProjects, getPetitions])
 
   useEffect(() => {
     getPetitions()

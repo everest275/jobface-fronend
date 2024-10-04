@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useForm, Resolver } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from '../../hook/useAuthfaceContext'
-import { LoginUser } from "../../services/AuthService";
 
 type FormValues = {
   email: string;
@@ -62,7 +61,7 @@ const LoginForm: React.FC = () => {
   }, [isAuthenticated, navigate])
 
   const onSubmit = handleSubmit(async (data) => {
-    const pullRequest: LoginUser = {
+    const pullRequest = {
       email: data.email,
       password: data.password,
     }

@@ -4,7 +4,7 @@ import editIcon from '../../assets/edit.svg';
 import deleteIcon from '../../assets/delete-icon.svg';
 import { AllPortfolioAbilitie } from "./PortfolioAbilitieInterface";
 import { ClientPortfolioAbilitieRoutes } from './PortfolioAbilitieConst'
-import { deleteRequest, getRequest } from "../../services/RequestService";
+import { useRequestServices } from "../../services/RequestService";
 
 export const PortfolioProyectPage = () => {
 
@@ -13,13 +13,15 @@ export const PortfolioProyectPage = () => {
   const navigate = useNavigate()
   const [projectLimit, setProjectLimit] = useState(8);
   const [showAnimation, setShowAnimation] = useState(false);
+  const { getRequest, deleteRequest } = useRequestServices();
+
 
   const getAbilities = useCallback(async () => {
     const res = await getRequest(ClientPortfolioAbilitieRoutes.PUBLIC, id)
     setVisibleProjects(res.slice(0, projectLimit));
     setShowAnimation(true);
 
-  }, [id, projectLimit])
+  }, [getRequest,id, projectLimit])
 
   useEffect(() => {
     getAbilities()

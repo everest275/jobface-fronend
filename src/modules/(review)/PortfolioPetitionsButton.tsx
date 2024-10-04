@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import Modal from "../../components/Modal";
 import { useAuth } from "../../hook/useAuthfaceContext";
 import { ClientReviewRoutes } from './PortfolioReviewConst'
-import { getRequest, postRequest, deleteRequest } from "../../services/RequestService";
+import { useRequestServices } from "../../services/RequestService";
 import { PortfolioReview } from './PortfolioReviewInterfaces'
 
 interface User {
@@ -15,6 +15,7 @@ interface RequestsButtonProps {
 }
 
 const RequestsButton: React.FC<RequestsButtonProps> = ({ id }) => {
+    const {getRequest, postRequest, deleteRequest}=useRequestServices()
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { user } = useAuth()
     const [searchTerm, setSearchTerm] = useState("");
@@ -33,7 +34,7 @@ const RequestsButton: React.FC<RequestsButtonProps> = ({ id }) => {
     const getSendedReviews = useCallback(async () => {
         const res = await getRequest(ClientReviewRoutes.SENDED, id)
         setSendedReviews(res)
-    }, [id])
+    }, [getRequest,id])
 
     useEffect(() => {
         getSendedReviews()
@@ -49,7 +50,7 @@ const RequestsButton: React.FC<RequestsButtonProps> = ({ id }) => {
         } else {
             setFilteredUsers([]);
         }
-    }, [searchTerm]);
+    }, [getRequest,searchTerm]);
 
     useEffect(() => {
         if (searchTerm.length > 2) {

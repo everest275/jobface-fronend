@@ -3,7 +3,7 @@ import workIcon from '../../assets/work2.svg'
 import abilitesIcon from '../../assets/hablities.svg';
 import reviewsIcon from '../../assets/reviews.svg';
 import { Link } from 'react-router-dom';
-import { getRequest } from '../../services/RequestService'
+import { useRequestServices } from '../../services/RequestService'
 import { ClientReviewRoutes } from '../(review)/PortfolioReviewConst'
 import { ClientPortfolioAbilitieRoutes } from '../(abilitie)/PortfolioAbilitieConst';
 import { ClientPortfolioProyectRoutes } from '../(proyect)/PortfolioProyectConst';
@@ -17,6 +17,7 @@ const CounterPortfolioAdds: React.FC<CounterPortfolioAddsProps> = ({ portfolioId
     const [abilitiesCounter, setAbilitiesCounter] = useState<number>(0);
     const [reviewsCounter, setReviewsCounter] = useState<number>(0);
     const [proyectsCounter, setProyectsCounter] = useState<number>(0);
+    const { getRequest } = useRequestServices();
 
 
 

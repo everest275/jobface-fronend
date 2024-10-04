@@ -4,7 +4,7 @@ import editPhotoIcon from '../../assets/add-photo.svg'
 import Modal from '../../components/Modal'
 import { PortfolioPicture, ProyectPicture } from './PictureInterface';
 import { ClientPictutersRoutes } from './PictureConst'
-import { getRequest, postRequest, putRequest } from '../../services/RequestService';
+import { useRequestServices } from '../../services/RequestService';
 
 interface PictureHandlerProps {
   id: string;
@@ -14,6 +14,7 @@ interface PictureHandlerProps {
 }
 
 const Base64ImageHandler: React.FC<PictureHandlerProps> = ({ id, isViewer, isPublic, type }) => {
+  const {getRequest, putRequest, postRequest}=useRequestServices()
   const [base64Image, setBase64Image] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [picture, setPicture] = useState<PortfolioPicture | ProyectPicture | null>(null);
@@ -39,7 +40,7 @@ const Base64ImageHandler: React.FC<PictureHandlerProps> = ({ id, isViewer, isPub
       };
       loadPicture();
     
-  }, [id, type, isPublic, setBase64Image]);
+  }, [getRequest,id, type, isPublic, setBase64Image]);
 
   const openModal = () => {
     setIsModalOpen(true);

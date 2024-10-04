@@ -15,7 +15,7 @@ import {
     Portfolio
 } from "../(portfolio)/PortfolioInterfaces";
 import { ClientReviewRoutes } from './PortfolioReviewConst'
-import { postRequest, putRequest } from "../../services/RequestService";
+import { useRequestServices } from "../../services/RequestService";
 
 
 interface RequestsButtonProps {
@@ -54,7 +54,7 @@ const resolver: Resolver<FormValues> = async (values) => {
 
 const RequestsButton: React.FC<RequestsButtonProps> = ({ commentType, portfolio, petition }) => {
 
-
+    const { putRequest, postRequest}=useRequestServices()
     const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({ resolver });
     const [isModalOpen, setIsModalOpen] = useState(false);
 

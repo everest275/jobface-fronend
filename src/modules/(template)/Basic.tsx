@@ -10,16 +10,15 @@ import { useParams } from "react-router-dom";
 import WriteComment from '../(review)/PortfolioCommentButton';
 import CounterPortfolioAdds from "../(portfolio)/PortfolioCounterComponent";
 import { Portfolio } from '../(portfolio)/PortfolioInterfaces'
-import { getRequest } from '../../services/RequestService'
-import { ClientPortfolioRoutes } from '../(portfolio)/PortfolioConst'
+import { useRequestServices } from '../../services/RequestService'
+import { ClientPortfolioRoutes } from '../(portfolio)/PortfolioType'
 
 const BasicTest = () => {
 
+  const {getRequest}=useRequestServices()
   const { setValue } = useForm();
   const { id } = useParams<{ id: string }>();
   const [portfolio, setPortfolio] = useState<Portfolio>();
-
-
 
   useEffect(() => {
     async function getPortfolio(){
@@ -27,7 +26,7 @@ const BasicTest = () => {
       setPortfolio(res)
     }
     getPortfolio()
-  },[id])
+  },[getRequest,id])
 
   useEffect(() => {
       setValue("title", portfolio?.title);

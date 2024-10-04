@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import VerificationForm from './VerficationForm'
 import Modal from '../../components/Modal'
-import { RegisterUser } from "../../services/AuthService";
+import { RegisterUser } from "./AuthInterface";
 
 type FormValues = {
   name: string;

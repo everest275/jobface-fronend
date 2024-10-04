@@ -1,7 +1,7 @@
 import { createContext, useState, ReactNode, FC, useEffect } from 'react';
 import { RegisterUser, LoginUser, User } from '../modules/(auth)/AuthInterface';
 import Cookies from 'js-cookie'
-import { getRequest, postRequest } from '../services/RequestService';
+import { useRequestServices } from '../services/RequestService';
 import { ClientAuthRoutes } from '../modules/(auth)/AuthConst'
 
 interface AuthContextType {
@@ -30,6 +30,8 @@ interface ApiError {
 }
 
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
+
+  const {getRequest, postRequest}=useRequestServices()
   const [user, setUser] = useState<User | null>(null);
   const [verifyUser, setVerifyUser] = useState<RegisterUser | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -127,7 +129,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       }
     }
     checklogin()
-  }, [])
+  }, [getRequest])
 
   return (
     <AuthContext.Provider value={{ user, verifyUser, code, verifyEmail, logout, signup, signin, loading, isAuthenticated, errors }}>

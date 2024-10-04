@@ -4,7 +4,7 @@ import PictureHandler from '../(picture)/PictureHandler'
 import viewIcon from '../../assets/visibility-icon.svg';
 import editIcon from '../../assets/edit.svg';
 import deleteIcon from '../../assets/delete-icon.svg';
-import { deleteRequest, getRequest } from "../../services/RequestService";
+import { useRequestServices } from "../../services/RequestService";
 import { ClientPortfolioProyectRoutes } from "./PortfolioProyectConst";
 
 interface Project {
@@ -18,6 +18,8 @@ interface Project {
 export const PortfolioProyectPage = () => {
 
   const { id } = useParams<{ id: string }>();
+  const { getRequest, deleteRequest } = useRequestServices();
+
   const [visibleProjects, setVisibleProjects] = useState<Project[]>([]);
   const navigate = useNavigate()
   const [projectLimit, setProjectLimit] = useState(8);
@@ -27,7 +29,7 @@ export const PortfolioProyectPage = () => {
     const res = await getRequest(ClientPortfolioProyectRoutes.PUBLIC, id)
     setVisibleProjects(res.slice(0, projectLimit));
     setShowAnimation(true);
-  }, [id, projectLimit])
+  }, [getRequest,id, projectLimit])
 
   useEffect(() => {
     getProyects()

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Portfolio } from './PortfolioInterfaces'
 import { useRequestServices } from '../../services/RequestService'
-import { ClientPortfolioRoutes } from './PortfolioConst'
+import { ClientPortfolioRoutes } from './PortfolioType'
 import PictureHandler from '../(picture)/PictureHandler'
 import CounterPortfolioAdds from './PortfolioCounterComponent'
 import ButtonModel from '../../components/ButtonModel'

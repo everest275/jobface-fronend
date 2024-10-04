@@ -1,83 +1,20 @@
-import { useForm, Resolver } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
+import { useRequestServices } from '../../services/RequestService';
+import { ClientPortfolioRoutes,PortfolioFormValues,resolver } from './PortfolioType';
+
 import deleteIcon from '../../assets/delete-icon.svg';
 import uploadIcon from '../../assets/upload.svg';
 import closeIcon from '../../assets/close.svg';
 import PictureHandler from '../(picture)/PictureHandler';
-import { useRequestServices } from '../../services/RequestService';
-import { ClientPortfolioRoutes } from './PortfolioConst';
 
-type FormValues = {
-  name: string;
-  title: string;
-  description: string;
-  about: string;
-  country: string;
-  city: string;
-};
-
-type ValidationError = {
-  type: string;
-  message: string;
-};
-
-type Errors = {
-  [K in keyof FormValues]?: ValidationError;
-};
-
-const resolver: Resolver<FormValues> = async (values) => {
-  const errors: Errors = {};
-
-  if (!values.name) {
-    errors.name = {
-      type: "required",
-      message: "Name es requerido.",
-    };
-  }
-
-  if (!values.title) {
-    errors.title = {
-      type: "required",
-      message: "Title es requerido.",
-    };
-  }
-  if (!values.description) {
-    errors.description = {
-      type: "required",
-      message: "Description es requerido.",
-    };
-  }
-  if (!values.about) {
-    errors.about = {
-      type: "required",
-      message: "About es requerido.",
-    };
-  }
-  if (!values.country) {
-    errors.country = {
-      type: "required",
-      message: "Country es requerido.",
-    };
-  }
-  if (!values.city) {
-    errors.city = {
-      type: "required",
-      message: "City es requerido.",
-    };
-  }
-
-  return {
-    values: Object.keys(errors).length ? {} : values,
-    errors,
-  };
-};
 
 export default function PortfolioForm() {
 
   const {getRequest, putRequest, postRequest, deleteRequest}=useRequestServices()
-  const { id } = useParams<{ id: string }>(); // Assume `id` is passed via route params for editing
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormValues>({ resolver });
+  const { id } = useParams<{ id: string }>();
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<PortfolioFormValues>({ resolver });
   const navigate = useNavigate();
   const [showAnimation, setShowAnimation] = useState(false); 
 

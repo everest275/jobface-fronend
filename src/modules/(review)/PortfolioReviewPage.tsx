@@ -6,11 +6,13 @@ import RequestsButton from './PortfolioRequestsButton'
 import PortfolioPetitionsButton from './PortfolioPetitionsButton'
 import { ClientReviewRoutes } from './PortfolioReviewConst'
 import { PortfolioReview } from './PortfolioReviewInterfaces'
-import { getRequest, deleteRequest } from "../../services/RequestService";
+import { useRequestServices } from "../../services/RequestService";
 
 export const PortfolioProyectPage = () => {
 
   const { id } = useParams<{ id: string }>();
+  const { getRequest, deleteRequest } = useRequestServices();
+
   const [visibleProjects, setVisibleProjects] = useState<PortfolioReview[]>([]);
   const navigate = useNavigate()
   const [projectLimit, setProjectLimit] = useState(8);
@@ -20,7 +22,7 @@ export const PortfolioProyectPage = () => {
     const res = await getRequest(ClientReviewRoutes.SUCCESS, id)
     setVisibleProjects(res.slice(0, projectLimit));
     setShowAnimation(true);
-  }, [id, projectLimit])
+  }, [getRequest,id, projectLimit])
 
   useEffect(() => {
     getReviews()
